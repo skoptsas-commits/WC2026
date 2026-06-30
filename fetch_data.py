@@ -51,23 +51,34 @@ def find_col(df, *cands):
 
 
 # ── Επεξεργασία ομάδων ─────────────────────────────────────────────────
+def parse_score(val):
+    """Δέχεται '2–1' / '2-1' / '2—1' (οποιαδήποτε παύλα) → (2, 1) ή None."""
+    if not isinstance(val, str):
+        return None
+    import re
+    m = re.match(r"\s*(\d+)\s*[\u2013\u2014\-]\s*(\d+)\s*", val)
+    if m:
+        return int(m.group(1)), int(m.group(2))
+    return None
+
+
 def compute_team_table(sched):
     df = sched.copy().reset_index()
-    if "score" in df.columns:
-        df = df.dropna(subset=["score"])
-    elif "home_score" in df.columns:
-        df = df.dropna(subset=["home_score"])
+    print(f"   schedule: {len(df)} γραμμές, στήλες: {list(df.columns)}")
 
     rows = []
     for _, m in df.iterrows():
-        hs, as_ = m.get("home_score"), m.get("away_score")
-        if pd.isna(hs) and isinstance(m.get("score"), str) and "–" in m["score"]:
-            try:
-                hs, as_ = map(int, m["score"].split("–"))
-            except ValueError:
+        hs = m.get("home_score")
+        as_ = m.get("away_score")
+        # αν δεν υπάρχουν ξεχωριστές στήλες, δοκίμασε το 'score'
+        if pd.isna(hs) or pd.isna(as_):
+            parsed = parse_score(m.get("score"))
+            if parsed is None:
                 continue
-        if pd.isna(hs):
+            hs, as_ = parsed
+        if pd.isna(hs) or pd.isna(as_):
             continue
+        hs, as_ = int(hs), int(as_)
         hxg = m.get("home_xg", 0) or 0
         axg = m.get("away_xg", 0) or 0
         for team, gf, ga, xg, xga in [
@@ -78,6 +89,7 @@ def compute_team_table(sched):
             rows.append({"team": team, "GF": gf, "GA": ga,
                          "xG": xg, "xGA": xga, "result": res})
 
+    print(f"   ολοκληρωμένοι αγώνες που διαβάστηκαν: {len(rows)//2}")
     pf = pd.DataFrame(rows)
     if pf.empty:
         return pf
@@ -99,6 +111,7 @@ def compute_team_table(sched):
 # ── Επεξεργασία παικτών ────────────────────────────────────────────────
 def compute_player_table(fbref):
     ps = flatten_cols(fbref.read_player_season_stats(stat_type="standard")).reset_index()
+    print(f"   player stats: {len(ps)} γραμμές, στήλες: {list(ps.columns)[:15]}…")
 
     c_min  = find_col(ps, "Playing Time_Min", "Min", "minutes")
     c_g    = find_col(ps, "Performance_Gls", "Gls", "goals")
@@ -108,6 +121,12 @@ def compute_player_table(fbref):
     c_pl   = find_col(ps, "player")
     c_team = find_col(ps, "team", "squad")
     c_nat  = find_col(ps, "nation", "nationality")
+
+    # αν λείπει βασική στήλη, σταμάτα καθαρά (το log θα δείξει τι βρέθηκε)
+    missing = [n for n, c in [("Min", c_min), ("Gls", c_g), ("xG", c_xg)] if c is None]
+    if missing:
+        print(f"   ⚠️  Δεν βρέθηκαν στήλες {missing} στα player stats — επιστρέφω κενό.")
+        return []
 
     for c in [c_min, c_g, c_a, c_xg, c_xag]:
         if c:
