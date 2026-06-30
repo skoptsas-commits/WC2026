@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-30T18:22:47+00:00",
+  "updated_at": "2026-06-30T18:54:56+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -639,6 +639,15 @@
       "played": 3
     },
     {
+      "player": "Erling Haaland",
+      "team": "Norway",
+      "nation": "NOR",
+      "g": 5,
+      "a": 0,
+      "pen": 0,
+      "played": 4
+    },
+    {
       "player": "Vinicius Junior",
       "team": "Brazil",
       "nation": "BRA",
@@ -655,15 +664,6 @@
       "a": 2,
       "pen": 0,
       "played": 3
-    },
-    {
-      "player": "Erling Haaland",
-      "team": "Norway",
-      "nation": "NOR",
-      "g": 4,
-      "a": 0,
-      "pen": 0,
-      "played": 4
     },
     {
       "player": "Ousmane Dembélé",
@@ -828,6 +828,15 @@
       "played": 4
     },
     {
+      "player": "Amad Diallo",
+      "team": "Ivory Coast",
+      "nation": "IVO",
+      "g": 2,
+      "a": 0,
+      "pen": 0,
+      "played": 3
+    },
+    {
       "player": "Yasin Ayari",
       "team": "Sweden",
       "nation": "SWE",
@@ -887,15 +896,6 @@
       "nation": "SWI",
       "g": 2,
       "a": 1,
-      "pen": 0,
-      "played": 3
-    },
-    {
-      "player": "Ermin Mahmic",
-      "team": "Bosnia-H.",
-      "nation": "BOS",
-      "g": 2,
-      "a": 0,
       "pen": 0,
       "played": 3
     }
