@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>World Cup 2026 Analytics</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<style>
+/* ── Reset ────────────────────────────────────────────────────── */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  /* Official FIFA World Cup 2026 palette: black · gold · malachite green */
+  --red:#00A86B;     /* primary accent — malachite green (the trophy's base) */
+  --bg:#0a0a0a;--bg2:#111111;--bg3:#1a1a1a;
+  --card:#161616;--border:#2a2a2a;--gold:#D4AF37;   /* metallic gold */
+  --text:#f0f0e8;--muted:#8a8a7a;--green:#00A86B;--orange:#D4AF37;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;overflow-x:hidden}
+
+/* ── Refresh notification banner ─────────────────────────────── */
+#refresh-banner{display:none;position:fixed;top:0;left:0;right:0;z-index:200;
+  background:linear-gradient(90deg,#f59e0b,#ef4444);
+  padding:10px 20px;text-align:center;font-weight:700;font-size:.9em;cursor:pointer}
+#refresh-banner:hover{opacity:.9}
+
+/* ── Ticker ───────────────────────────────────────────────────── */
+.ticker{background:var(--red);padding:8px 0;overflow:hidden;white-space:nowrap;margin-top:0}
+.ticker-inner{display:inline-flex;animation:scroll 45s linear infinite}
+.ticker-inner span{padding:0 36px;font-size:.78em;font-weight:700;letter-spacing:.04em;color:#fff}
+.ticker-inner .sep{color:rgba(255,255,255,.35);padding:0}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── Header ───────────────────────────────────────────────────── */
+header{background:linear-gradient(180deg,#0b0b0f,#13131a);border-bottom:3px solid var(--red);padding:18px 24px 0}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:16px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo .trophy{font-size:2em}
+.logo h1{font-size:1.5em;font-weight:900;letter-spacing:-.01em;
+         background:linear-gradient(135deg,#fff 30%,var(--gold));
+         -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo small{display:block;font-size:.62em;color:var(--muted);font-weight:400;-webkit-text-fill-color:var(--muted)}
+.header-right{text-align:right;flex-shrink:0}
+.live-badge{background:var(--red);color:#fff;font-size:.68em;font-weight:800;
+            padding:3px 10px;border-radius:4px;letter-spacing:.06em;
+            animation:pulse 1.5s ease-in-out infinite;display:inline-block}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+.updated{color:var(--muted);font-size:.72em;margin-top:5px}
+#refresh-countdown{color:var(--gold);font-size:.72em;margin-top:3px;cursor:pointer}
+#refresh-countdown:hover{text-decoration:underline}
+
+/* ── Nav ──────────────────────────────────────────────────────── */
+nav{display:flex;gap:2px;overflow-x:auto;margin-top:2px}
+nav button{background:none;border:none;color:var(--muted);font-size:.8em;font-weight:700;
+           padding:11px 16px;cursor:pointer;border-bottom:3px solid transparent;
+           transition:.16s;letter-spacing:.04em;white-space:nowrap}
+nav button:hover{color:var(--text)}
+nav button.active{color:#fff;border-bottom-color:var(--red)}
+
+/* ── Recent results strip ─────────────────────────────────────── */
+.results-strip{background:var(--bg2);border-bottom:1px solid var(--border);
+               padding:12px 16px;overflow-x:auto}
+.results-strip-inner{display:flex;gap:10px;min-width:max-content}
+.match-chip{background:var(--card);border:1px solid var(--border);border-radius:8px;
+            padding:8px 14px;display:flex;align-items:center;gap:10px;
+            font-size:.8em;flex-shrink:0;transition:.15s}
+.match-chip:hover{border-color:rgba(0,168,107,.4)}
+.match-chip .team-side{display:flex;align-items:center;gap:5px;min-width:70px}
+.match-chip .team-side.right{flex-direction:row-reverse;min-width:70px;justify-content:flex-start}
+.match-chip img{width:20px;height:14px;border-radius:2px;object-fit:cover}
+.match-chip .team-name{font-weight:600;color:var(--text);font-size:.9em}
+.match-chip .score{font-weight:900;font-size:1.1em;color:#fff;
+                   background:var(--bg3);padding:3px 10px;border-radius:5px;min-width:48px;text-align:center}
+.match-chip .date{font-size:.75em;color:var(--muted);margin-left:2px}
+.results-label{font-size:.68em;font-weight:800;color:var(--muted);text-transform:uppercase;
+               letter-spacing:.08em;margin-bottom:6px}
+
+/* ── Main layout ──────────────────────────────────────────────── */
+main{padding:22px 18px 60px;max-width:1400px;margin:0 auto}
+.tab{display:none}
+.tab.active{display:block}
+.section-label{font-size:.68em;font-weight:800;letter-spacing:.1em;color:var(--red);text-transform:uppercase;margin-bottom:5px}
+.section-title{font-size:1.4em;font-weight:900;margin-bottom:16px;color:#fff}
+.section-title span{color:var(--muted);font-size:.58em;font-weight:500;margin-left:8px}
+
+/* ── Stat row ─────────────────────────────────────────────────── */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:15px 18px}
+.stat-card .num{font-size:1.9em;font-weight:900;color:#fff;line-height:1}
+.stat-card .lbl{font-size:.7em;color:var(--muted);margin-top:4px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.stat-card .sub{font-size:.73em;color:var(--gold);margin-top:2px;font-weight:600}
+
+/* ── Methodology card ─────────────────────────────────────────── */
+.methodology-card{background:linear-gradient(135deg,var(--card),#1a1a35);
+                  border:1px solid #3a2a5a;border-radius:12px;padding:18px 22px;
+                  margin-bottom:24px}
+.methodology-card summary{cursor:pointer;font-weight:700;font-size:.9em;color:var(--gold);
+                           list-style:none;display:flex;align-items:center;gap:8px}
+.methodology-card summary::before{content:'📐';font-size:1.1em}
+.methodology-card summary::-webkit-details-marker{display:none}
+.methodology-card[open] summary::after{content:' ▲';font-size:.7em;color:var(--muted)}
+.methodology-card:not([open]) summary::after{content:' ▼  (click to expand)';font-size:.7em;color:var(--muted)}
+.method-body{margin-top:14px}
+.method-body p{font-size:.82em;color:var(--muted);margin-bottom:10px;line-height:1.6}
+.method-body .formula{background:var(--bg3);border-radius:8px;padding:12px 16px;
+                       font-family:monospace;font-size:.8em;color:#a0c0ff;margin:10px 0}
+.weight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.weight-item{background:var(--bg3);border-radius:6px;padding:10px;text-align:center}
+.weight-item .w{font-size:1.3em;font-weight:900;color:var(--gold)}
+.weight-item .wl{font-size:.68em;color:var(--muted);margin-top:3px}
+
+/* ── Player card ──────────────────────────────────────────────── */
+.player-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:28px}
+.player-card{background:var(--card);border:1px solid var(--border);border-radius:12px;
+             overflow:hidden;transition:.2s;position:relative}
+.player-card:hover{transform:translateY(-3px);border-color:var(--red);box-shadow:0 8px 24px rgba(0,168,107,.12)}
+.player-card .top-bar{height:4px;width:100%}
+.player-card .body{padding:14px}
+.player-card .flag-name{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.player-card .flag-name img.flag{width:22px;height:15px;border-radius:2px;object-fit:cover}
+.player-card .flag-name .nation{font-size:.7em;color:var(--muted);font-weight:600}
+.player-card .pname{font-size:.95em;font-weight:800;color:#fff;margin-bottom:10px;line-height:1.2}
+.player-card .stats{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.player-card .stat{background:var(--bg3);border-radius:6px;padding:7px}
+.player-card .stat .v{font-size:1.25em;font-weight:900;color:#fff}
+.player-card .stat .k{font-size:.62em;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:1px}
+.badge{position:absolute;top:10px;right:10px;font-size:.62em;font-weight:800;padding:3px 7px;border-radius:20px;letter-spacing:.04em}
+.badge-green{background:rgba(0,196,106,.15);color:var(--green);border:1px solid var(--green)}
+.badge-red{background:rgba(220,50,80,.12);color:#ff6b8a;border:1px solid #ff4d6d}
+.value-bar-wrap{margin-top:10px}
+.value-bar-wrap .bar-label{display:flex;justify-content:space-between;font-size:.66em;color:var(--muted);margin-bottom:3px}
+.value-bar{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden}
+.value-bar .fill{height:100%;border-radius:2px;transition:width .6s}
+
+/* ── Player photo (scorer tab) ────────────────────────────────── */
+.photo-wrap{width:64px;height:64px;border-radius:50%;overflow:hidden;flex-shrink:0;
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.3em;font-weight:900;color:#fff;margin-bottom:8px;
+            border:2px solid var(--border);transition:.3s}
+.photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.scorer-layout{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.scorer-rank{font-size:1.8em;font-weight:900;color:var(--muted);min-width:32px}
+.scorer-rank.top3{color:var(--gold)}
+
+/* ── Team card ────────────────────────────────────────────────── */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-bottom:28px}
+.team-card{background:var(--card);border:1px solid var(--border);border-radius:12px;
+           padding:16px;display:flex;align-items:center;gap:12px;transition:.18s}
+.team-card:hover{border-color:rgba(0,168,107,.4);transform:translateY(-2px)}
+.team-card .flag{width:46px;height:32px;border-radius:4px;object-fit:cover;flex-shrink:0}
+.team-card .info .tname{font-weight:800;font-size:.92em;color:#fff;margin-bottom:5px}
+.wdl{display:flex;gap:5px;margin-bottom:5px}
+.wdl-item{font-size:.68em;font-weight:700;padding:2px 7px;border-radius:4px}
+.w-item{background:rgba(0,196,106,.15);color:var(--green)}
+.d-item{background:rgba(255,140,0,.12);color:var(--orange)}
+.l-item{background:rgba(220,50,80,.12);color:#ff6b8a}
+.xg-row{display:flex;gap:10px}
+.xg-num{font-size:.72em;color:var(--muted)}
+.xg-num span{color:#fff;font-weight:700}
+
+/* ── Charts ───────────────────────────────────────────────────── */
+.chart-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:22px}
+.chart-card h3{font-size:.9em;font-weight:700;color:#fff;margin-bottom:14px}
+.chart-card h3 small{color:var(--muted);font-weight:400;margin-left:6px;font-size:.85em}
+
+/* ── Custom ranked points bars ────────────────────────────────── */
+.rank-row{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.rank-row:last-child{border-bottom:none}
+.rank-num{font-size:.85em;font-weight:800;color:var(--muted);min-width:22px;text-align:center}
+.rank-row.top1 .rank-num{color:var(--gold)}
+.rank-row.top2 .rank-num,.rank-row.top3 .rank-num{color:#e8e8e8}
+.rank-flag{width:30px;height:20px;border-radius:3px;object-fit:cover;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.rank-flag-fb{width:30px;height:20px;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.6em;font-weight:800;color:#fff}
+.rank-name{min-width:96px;font-size:.84em;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rank-track{flex:1;height:22px;background:var(--bg3);border-radius:5px;overflow:hidden;position:relative}
+.rank-fill{height:100%;border-radius:5px;width:0;transition:width 1s cubic-bezier(.22,1,.36,1);
+           background:linear-gradient(90deg,var(--green),var(--gold))}
+.rank-pts{min-width:46px;text-align:right;font-size:.95em;font-weight:900;color:#fff}
+.rank-pts small{font-size:.62em;font-weight:600;color:var(--muted);margin-left:2px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.verdict-section{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:28px}
+.verdict-block h2{font-size:1em;font-weight:900;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.v-green{color:var(--green)}
+.v-red{color:#ff4d6d}
+.avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;
+        justify-content:center;font-size:1.2em;font-weight:900;color:#fff;flex-shrink:0;border:2px solid}
+
+@media(max-width:760px){.grid2,.verdict-section{grid-template-columns:1fr}
+  .stat-row{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.player-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<!-- ── Data-load error banner (shown only if data.json fails) ──── -->
+<div id="refresh-banner" onclick="this.style.display='none'">
+  ⚠️ &nbsp;Could not load latest data — showing last available snapshot &nbsp;·&nbsp; click to dismiss
+</div>
+
+<!-- ── Ticker (populated from data.json) ───────────────────────── -->
+<div class="ticker">
+  <div class="ticker-inner" id="ticker-inner"></div>
+</div>
+
+<!-- ── Header ──────────────────────────────────────────────────── -->
+<header>
+  <div class="header-top">
+    <div class="logo">
+      <span class="trophy">🏆</span>
+      <div>
+        <h1>World Cup 2026<small>Analytics Dashboard · Powered by football-data.org</small></h1>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="live-badge" id="data-badge">FBref data</span>
+      <div class="updated" id="updated-stamp">Loading…</div>
+      <div id="refresh-countdown" title="Data refreshes automatically via GitHub Actions">⟳ Auto-updated every 6h</div>
+    </div>
+  </div>
+  <nav id="mainnav">
+    <button class="active" onclick="showTab('scorers',this)">⚽ TOP SCORERS</button>
+    <button onclick="showTab('teams',this)">🛡️ STANDINGS</button>
+    <button onclick="showTab('goals',this)">📊 GOALS ANALYSIS</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ═══════════════════════════════════ TOP SCORERS ═════════════ -->
+<div id="tab-scorers" class="tab active">
+  <div class="section-label">Individual Stats</div>
+  <div class="section-title">⚽ Top Scorers <span>Goals · Assists · WC 2026</span></div>
+  <div class="stat-row" id="scorer-stat-row"></div>
+  <div id="scorer-cards" class="player-grid"></div>
+  <div class="chart-card">
+    <h3>Goals &amp; Assists — top scorers</h3>
+    <div id="chart-scorers" style="height:520px"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ STANDINGS ═══════════ -->
+<div id="tab-teams" class="tab">
+  <div class="section-label">Team Rankings</div>
+  <div class="section-title">🛡️ Standings <span>Points · Goal Difference</span></div>
+  <div id="team-cards" class="team-grid"></div>
+  <div class="grid2">
+    <div class="chart-card"><h3>Points Table <small>ranked by points · then goal difference</small></h3><div id="rank-bars"></div></div>
+    <div class="chart-card"><h3>Win / Draw / Loss %</h3><div id="chart-wdl" style="height:520px"></div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ GOALS ANALYSIS ══════════ -->
+<div id="tab-goals" class="tab">
+  <div class="section-label">Tournament Output</div>
+  <div class="section-title">📊 Goals Analysis <span>Scoring &amp; defence by team</span></div>
+  <div class="chart-card">
+    <h3>Goals For vs Goals Against <small>top-left = strong attack &amp; defence</small></h3>
+    <div id="chart-gfga" style="height:540px"></div>
+  </div>
+  <div class="chart-card">
+    <h3>Goal Difference by team</h3>
+    <div id="chart-gd" style="height:500px"></div>
+  </div>
+</div>
+
+</main>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  WORLD CUP 2026 DASHBOARD — data-driven from data.json
+//  (data.json is produced by fetch_data.py via GitHub Actions,
+//   sourced from football-data.org)
+// ═══════════════════════════════════════════════════════════════
+const TC = {
+  Argentina:'#74ACDF', France:'#002395',   Brazil:'#009C3B',  England:'#CF091D',
+  Spain:'#AA151B',     Germany:'#000000',  Portugal:'#006600',Netherlands:'#FF6600',
+  Morocco:'#C1272D',   Japan:'#BC002D',    'United States':'#002868', USA:'#002868',
+  Mexico:'#006847',    Croatia:'#FF0000',  Senegal:'#00853F', Norway:'#EF2B2D',
+  Canada:'#FF0000',    Colombia:'#FCD116', Egypt:'#C8102E',   Belgium:'#E30613',
+  Switzerland:'#FF0000', Uruguay:'#5CBFEB', Denmark:'#C8102E', Sweden:'#FECC00',
+};
+const colorFor = t => TC[t] || '#555a78';
+
+// Country codes (ISO-2) for flag images — covers all 48 WC2026 nations + common name variants
+const CC = {
+  Argentina:'ar', France:'fr', Brazil:'br', England:'gb-eng', Spain:'es', Germany:'de',
+  Portugal:'pt', Netherlands:'nl', Morocco:'ma', Japan:'jp', 'United States':'us', USA:'us',
+  Mexico:'mx', Croatia:'hr', Senegal:'sn', Norway:'no', Canada:'ca', Colombia:'co',
+  Egypt:'eg', Belgium:'be', Switzerland:'ch', Uruguay:'uy', Denmark:'dk', Sweden:'se',
+  Scotland:'gb-sct', Wales:'gb-wls', Algeria:'dz', Austria:'at', Iraq:'iq', Ghana:'gh',
+  Australia:'au', Iran:'ir', Jordan:'jo', 'South Korea':'kr', 'Korea Republic':'kr',
+  Qatar:'qa', 'Saudi Arabia':'sa', Uzbekistan:'uz', 'Cape Verde':'cv', 'Cabo Verde':'cv',
+  'Congo DR':'cd', 'DR Congo':'cd', 'Côte d\'Ivoire':'ci', 'Ivory Coast':'ci', Tunisia:'tn',
+  'South Africa':'za', 'New Zealand':'nz', Curaçao:'cw', Ecuador:'ec', Paraguay:'py',
+  Italy:'it', Poland:'pl', Türkiye:'tr', Turkey:'tr', 'Bosnia and Herzegovina':'ba',
+  Czechia:'cz', 'Czech Republic':'cz', Panama:'pa', Honduras:'hn', 'Costa Rica':'cr',
+};
+const FLAG = t => CC[t] ? `https://flagcdn.com/w40/${CC[t]}.png` : null;
+const initials = name => (name||'?').split(/[\s.]+/).filter(Boolean).map(x=>x[0]).slice(0,2).join('').toUpperCase();
+
+const LB = {paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
+            font:{color:'#ccc',family:'Segoe UI'}, margin:{t:30,b:50,l:10,r:10},
+            template:'plotly_dark'};
+const GR = '#2a2a3d';
+
+let DATA = null;
+
+async function boot(){
+  try{
+    const res = await fetch('data.json?_=' + Date.now());
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    DATA = await res.json();
+  }catch(e){
+    console.error('data.json load failed:', e);
+    document.getElementById('refresh-banner').style.display = 'block';
+    document.getElementById('updated-stamp').textContent = 'data unavailable';
+    return;
+  }
+  renderAll();
+}
+
+function renderAll(){
+  stampHeader();
+  renderTicker();
+  renderScorers();
+  renderTeams();
+  renderGoals();
+}
+
+function stampHeader(){
+  const el = document.getElementById('updated-stamp');
+  if(DATA.updated_at){
+    const d = new Date(DATA.updated_at);
+    el.textContent = 'Updated ' + d.toLocaleString('en-GB',
+      {day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) + ' UTC';
+  }
+  const badge = document.getElementById('data-badge');
+  if(DATA._note){ badge.textContent = 'SAMPLE'; badge.style.background = 'var(--orange)'; }
+  else { badge.textContent = 'football-data.org'; }
+}
+
+function renderTicker(){
+  const items = [];
+  (DATA.players||[]).slice(0,6).forEach(p=> items.push(`⚽ ${p.player} — ${p.g}G ${p.a}A`));
+  (DATA.teams||[]).slice(0,8).forEach(t=> items.push(`${t.team} ${t.points}pts`));
+  if(!items.length) items.push('Awaiting first results…');
+  const html = items.map(s=>`<span>${s}</span><span class="sep"> | </span>`).join('');
+  document.getElementById('ticker-inner').innerHTML = html + html;
+}
+
+// ── TOP SCORERS ───────────────────────────────────────────────
+function renderScorers(){
+  const players = [...(DATA.players||[])].sort((a,b)=>b.g-a.g);
+  if(!players.length) return;
+  const topG = players[0];
+  const totalGoals = players.reduce((s,p)=>s+p.g,0);
+  const byAssists = [...players].sort((a,b)=>b.a-a.a)[0];
+  document.getElementById('scorer-stat-row').innerHTML = `
+    <div class="stat-card"><div class="num">${players.length}</div>
+      <div class="lbl">Scorers tracked</div><div class="sub">top of the tournament</div></div>
+    <div class="stat-card"><div class="num" style="font-size:1.05em">${topG.player}</div>
+      <div class="lbl">Golden Boot lead</div><div class="sub">${topG.g} goals</div></div>
+    <div class="stat-card"><div class="num" style="color:var(--green);font-size:1.05em">${byAssists.player}</div>
+      <div class="lbl">Most assists</div><div class="sub">${byAssists.a} assists</div></div>
+    <div class="stat-card"><div class="num">${totalGoals}</div>
+      <div class="lbl">Goals (top scorers)</div><div class="sub">combined</div></div>`;
+
+  document.getElementById('scorer-cards').innerHTML = players.slice(0,12).map((p,i)=>{
+    const color = colorFor(p.team), rank = i+1;
+    const penBadge = p.pen>0 ? `<span class="badge badge-red">${p.pen} pen</span>` : '';
+    return `
+    <div class="player-card">
+      <div class="top-bar" style="background:${color}"></div>
+      <div class="body">
+        ${penBadge}
+        <div class="scorer-layout">
+          <div class="scorer-rank ${rank<=3?'top3':''}">#${rank}</div>
+          <div class="photo-wrap" style="background:${color}22;border-color:${color}44"><span style="font-size:1.3em">${initials(p.player)}</span></div>
+          <div>
+            <div class="pname">${p.player}</div>
+            <div class="flag-name"><span class="nation">${p.team}</span></div>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="v">${p.g}</div><div class="k">Goals</div></div>
+          <div class="stat"><div class="v">${p.a}</div><div class="k">Assists</div></div>
+          <div class="stat"><div class="v">${p.pen}</div><div class="k">Penalties</div></div>
+          <div class="stat"><div class="v">${p.played}</div><div class="k">Matches</div></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const sc = players.slice(0,12);
+  Plotly.newPlot('chart-scorers',[
+    {type:'bar', orientation:'h', y:sc.map(p=>p.player), x:sc.map(p=>p.g), name:'Goals', marker:{color:'#D4AF37'},
+     hovertemplate:'<b>%{y}</b><br>Goals: %{x}<extra></extra>'},
+    {type:'bar', orientation:'h', y:sc.map(p=>p.player), x:sc.map(p=>p.a), name:'Assists', marker:{color:'#00A86B'},
+     hovertemplate:'<b>%{y}</b><br>Assists: %{x}<extra></extra>'}
+  ],{...LB, barmode:'group', xaxis:{title:'Count', gridcolor:GR, dtick:1},
+     yaxis:{categoryorder:'array', categoryarray:[...sc.map(p=>p.player)].reverse(), gridcolor:GR},
+     legend:{orientation:'h', y:1.05}, height:520});
+}
+
+// ── STANDINGS ─────────────────────────────────────────────────
+function renderTeams(){
+  const teams = [...(DATA.teams||[])].sort((a,b)=>b.points-a.points || b.GD-a.GD);
+  if(!teams.length) return;
+  document.getElementById('team-cards').innerHTML = teams.map(t=>{
+    const flag = FLAG(t.team);
+    const badge = flag
+      ? `<img class="flag" src="${flag}" alt="${t.team}" style="width:46px;height:32px;border-radius:4px;object-fit:cover;flex-shrink:0" onerror="this.outerHTML='<div class=&quot;avatar&quot; style=&quot;background:${colorFor(t.team)}22;border:2px solid ${colorFor(t.team)}55;width:46px;height:46px;flex-shrink:0&quot;>${initials(t.team)}</div>'">`
+      : `<div class="avatar" style="background:${colorFor(t.team)}22;border:2px solid ${colorFor(t.team)}55;width:46px;height:46px;flex-shrink:0">${initials(t.team)}</div>`;
+    return `
+    <div class="team-card">
+      ${badge}
+      <div class="info">
+        <div class="tname">${t.team} <span style="color:var(--gold);font-size:.78em">${t.points}pts</span> <span style="color:var(--muted);font-size:.7em">Grp ${t.group}</span></div>
+        <div class="wdl">
+          <span class="wdl-item w-item">W${t.W}</span>
+          <span class="wdl-item d-item">D${t.D}</span>
+          <span class="wdl-item l-item">L${t.L}</span>
+        </div>
+        <div class="xg-row">
+          <span class="xg-num">GF <span>${t.GF}</span></span>
+          <span class="xg-num">GA <span>${t.GA}</span></span>
+          <span class="xg-num">GD <span>${t.GD>0?'+':''}${t.GD}</span></span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Custom ranked points bars (descending), with flags + animated gold fill
+  const ranked = [...teams].sort((a,b)=>b.points-a.points || b.GD-a.GD);
+  const maxPts = Math.max(...ranked.map(t=>t.points), 1);
+  document.getElementById('rank-bars').innerHTML = ranked.map((t,i)=>{
+    const flag = FLAG(t.team);
+    const flagEl = flag
+      ? `<img class="rank-flag" src="${flag}" alt="${t.team}" onerror="this.outerHTML='<div class=&quot;rank-flag-fb&quot; style=&quot;background:${colorFor(t.team)}&quot;>${initials(t.team)}</div>'">`
+      : `<div class="rank-flag-fb" style="background:${colorFor(t.team)}">${initials(t.team)}</div>`;
+    return `
+    <div class="rank-row ${i<3?'top'+(i+1):''}">
+      <span class="rank-num">${i+1}</span>
+      ${flagEl}
+      <span class="rank-name">${t.team}</span>
+      <div class="rank-track"><div class="rank-fill" data-w="${Math.round(t.points/maxPts*100)}"></div></div>
+      <span class="rank-pts">${t.points}<small>pts</small></span>
+    </div>`;
+  }).join('');
+  // animate fills after paint
+  requestAnimationFrame(()=>setTimeout(()=>{
+    document.querySelectorAll('#rank-bars .rank-fill').forEach(el=>{ el.style.width = el.dataset.w + '%'; });
+  }, 50));
+
+  const tS = [...teams].filter(t=>t.MP>0).sort((a,b)=>(a.W/a.MP)-(b.W/b.MP));
+  const tn = tS.map(t=>t.team);
+  Plotly.newPlot('chart-wdl',[
+    {type:'bar',orientation:'h',y:tn,x:tS.map(t=>+(t.W/t.MP*100).toFixed(1)),name:'Win',marker:{color:'#00A86B'}},
+    {type:'bar',orientation:'h',y:tn,x:tS.map(t=>+(t.D/t.MP*100).toFixed(1)),name:'Draw',marker:{color:'#D4AF37'}},
+    {type:'bar',orientation:'h',y:tn,x:tS.map(t=>+(t.L/t.MP*100).toFixed(1)),name:'Loss',marker:{color:'#8a4a4a'}},
+  ],{...LB,barmode:'stack',xaxis:{title:'%',gridcolor:GR},yaxis:{gridcolor:GR},
+     legend:{orientation:'h',y:1.05},height:520});
+}
+
+// ── GOALS ANALYSIS ────────────────────────────────────────────
+function renderGoals(){
+  const teams = DATA.teams || [];
+  if(!teams.length) return;
+  // diverging scale: deep red (bad) → gold (neutral) → malachite (good)
+  const SCALE = [[0,'#8a4a4a'],[0.5,'#D4AF37'],[1,'#00A86B']];
+  const gf=teams.map(t=>t.GF), ga=teams.map(t=>t.GA);
+  Plotly.newPlot('chart-gfga',[{
+    type:'scatter', mode:'markers+text', x:gf, y:ga, text:teams.map(t=>t.team), textposition:'top center',
+    textfont:{size:10},
+    marker:{size:17, color:teams.map(t=>t.GD), colorscale:SCALE, showscale:true,
+            colorbar:{title:'GD'}, cmin:-6, cmid:0, cmax:6, line:{color:'rgba(255,255,255,.25)',width:1}},
+    hovertemplate:'<b>%{text}</b><br>GF: %{x}<br>GA: %{y}<extra></extra>'
+  }],{...LB, xaxis:{title:'Goals For', gridcolor:GR}, yaxis:{title:'Goals Against', gridcolor:GR}, height:540});
+
+  const byGD = [...teams].sort((a,b)=>a.GD-b.GD);
+  Plotly.newPlot('chart-gd',[{
+    type:'bar', orientation:'h', y:byGD.map(t=>t.team), x:byGD.map(t=>t.GD),
+    marker:{color:byGD.map(t=>t.GD), colorscale:SCALE, cmin:-6, cmid:0, cmax:6, showscale:false},
+    hovertemplate:'<b>%{y}</b><br>GD: %{x}<extra></extra>'
+  }],{...LB, xaxis:{title:'Goal Difference', gridcolor:GR, dtick:1, zeroline:true, zerolinecolor:'#444'}, yaxis:{gridcolor:GR}, height:500});
+}
+
+// ── TAB NAV ───────────────────────────────────────────────────
+function showTab(id,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('#mainnav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  setTimeout(()=>window.dispatchEvent(new Event('resize')),60);
+}
+
+boot();
+</script>
+</body>
+</html>
