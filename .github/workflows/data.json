@@ -1,0 +1,17 @@
+{
+  "updated_at": "2026-06-30T00:00:00+00:00",
+  "source": "football-data.org",
+  "competition": "WC",
+  "_note": "SAMPLE schema only — replaced automatically by GitHub Actions once the real fetch runs.",
+  "teams": [
+    {"team": "Germany", "group": "E", "MP": 3, "W": 2, "D": 0, "L": 1, "GF": 10, "GA": 4, "GD": 6, "points": 6, "win_pct": 66.7},
+    {"team": "Spain", "group": "H", "MP": 3, "W": 3, "D": 0, "L": 0, "GF": 8, "GA": 2, "GD": 6, "points": 9, "win_pct": 100.0},
+    {"team": "Argentina", "group": "J", "MP": 3, "W": 3, "D": 0, "L": 0, "GF": 7, "GA": 1, "GD": 6, "points": 9, "win_pct": 100.0},
+    {"team": "France", "group": "I", "MP": 3, "W": 2, "D": 1, "L": 0, "GF": 9, "GA": 3, "GD": 6, "points": 7, "win_pct": 66.7}
+  ],
+  "players": [
+    {"player": "Sample Player A", "team": "Germany", "nation": "GER", "g": 4, "a": 2, "pen": 0, "played": 3},
+    {"player": "Sample Player B", "team": "Spain", "nation": "ESP", "g": 3, "a": 3, "pen": 1, "played": 3},
+    {"player": "Sample Player C", "team": "Argentina", "nation": "ARG", "g": 3, "a": 1, "pen": 0, "played": 3}
+  ]
+}
