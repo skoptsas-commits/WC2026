@@ -9,9 +9,11 @@
 /* ── Reset ────────────────────────────────────────────────────── */
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --red:#E8003D;--bg:#0b0b0f;--bg2:#13131a;--bg3:#1c1c28;
-  --card:#1e1e2c;--border:#2a2a3d;--gold:#FFD700;
-  --text:#e8e8f0;--muted:#7a7a9a;--green:#00c46a;--orange:#ff8c00;
+  /* Official FIFA World Cup 2026 palette: black · gold · malachite green */
+  --red:#00A86B;     /* primary accent — malachite green (the trophy's base) */
+  --bg:#0a0a0a;--bg2:#111111;--bg3:#1a1a1a;
+  --card:#161616;--border:#2a2a2a;--gold:#D4AF37;   /* metallic gold */
+  --text:#f0f0e8;--muted:#8a8a7a;--green:#00A86B;--orange:#D4AF37;
 }
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;overflow-x:hidden}
@@ -62,7 +64,7 @@ nav button.active{color:#fff;border-bottom-color:var(--red)}
 .match-chip{background:var(--card);border:1px solid var(--border);border-radius:8px;
             padding:8px 14px;display:flex;align-items:center;gap:10px;
             font-size:.8em;flex-shrink:0;transition:.15s}
-.match-chip:hover{border-color:rgba(232,0,61,.4)}
+.match-chip:hover{border-color:rgba(0,168,107,.4)}
 .match-chip .team-side{display:flex;align-items:center;gap:5px;min-width:70px}
 .match-chip .team-side.right{flex-direction:row-reverse;min-width:70px;justify-content:flex-start}
 .match-chip img{width:20px;height:14px;border-radius:2px;object-fit:cover}
@@ -111,7 +113,7 @@ main{padding:22px 18px 60px;max-width:1400px;margin:0 auto}
 .player-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:28px}
 .player-card{background:var(--card);border:1px solid var(--border);border-radius:12px;
              overflow:hidden;transition:.2s;position:relative}
-.player-card:hover{transform:translateY(-3px);border-color:var(--red);box-shadow:0 8px 24px rgba(232,0,61,.12)}
+.player-card:hover{transform:translateY(-3px);border-color:var(--red);box-shadow:0 8px 24px rgba(0,168,107,.12)}
 .player-card .top-bar{height:4px;width:100%}
 .player-card .body{padding:14px}
 .player-card .flag-name{display:flex;align-items:center;gap:6px;margin-bottom:8px}
@@ -124,7 +126,7 @@ main{padding:22px 18px 60px;max-width:1400px;margin:0 auto}
 .player-card .stat .k{font-size:.62em;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:1px}
 .badge{position:absolute;top:10px;right:10px;font-size:.62em;font-weight:800;padding:3px 7px;border-radius:20px;letter-spacing:.04em}
 .badge-green{background:rgba(0,196,106,.15);color:var(--green);border:1px solid var(--green)}
-.badge-red{background:rgba(232,0,61,.12);color:#ff4d6d;border:1px solid #ff4d6d}
+.badge-red{background:rgba(220,50,80,.12);color:#ff6b8a;border:1px solid #ff4d6d}
 .value-bar-wrap{margin-top:10px}
 .value-bar-wrap .bar-label{display:flex;justify-content:space-between;font-size:.66em;color:var(--muted);margin-bottom:3px}
 .value-bar{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden}
@@ -144,14 +146,14 @@ main{padding:22px 18px 60px;max-width:1400px;margin:0 auto}
 .team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-bottom:28px}
 .team-card{background:var(--card);border:1px solid var(--border);border-radius:12px;
            padding:16px;display:flex;align-items:center;gap:12px;transition:.18s}
-.team-card:hover{border-color:rgba(232,0,61,.4);transform:translateY(-2px)}
+.team-card:hover{border-color:rgba(0,168,107,.4);transform:translateY(-2px)}
 .team-card .flag{width:46px;height:32px;border-radius:4px;object-fit:cover;flex-shrink:0}
 .team-card .info .tname{font-weight:800;font-size:.92em;color:#fff;margin-bottom:5px}
 .wdl{display:flex;gap:5px;margin-bottom:5px}
 .wdl-item{font-size:.68em;font-weight:700;padding:2px 7px;border-radius:4px}
 .w-item{background:rgba(0,196,106,.15);color:var(--green)}
 .d-item{background:rgba(255,140,0,.12);color:var(--orange)}
-.l-item{background:rgba(232,0,61,.12);color:#ff4d6d}
+.l-item{background:rgba(220,50,80,.12);color:#ff6b8a}
 .xg-row{display:flex;gap:10px}
 .xg-num{font-size:.72em;color:var(--muted)}
 .xg-num span{color:#fff;font-weight:700}
@@ -264,6 +266,22 @@ const TC = {
   Switzerland:'#FF0000', Uruguay:'#5CBFEB', Denmark:'#C8102E', Sweden:'#FECC00',
 };
 const colorFor = t => TC[t] || '#555a78';
+
+// Country codes (ISO-2) for flag images — covers all 48 WC2026 nations + common name variants
+const CC = {
+  Argentina:'ar', France:'fr', Brazil:'br', England:'gb-eng', Spain:'es', Germany:'de',
+  Portugal:'pt', Netherlands:'nl', Morocco:'ma', Japan:'jp', 'United States':'us', USA:'us',
+  Mexico:'mx', Croatia:'hr', Senegal:'sn', Norway:'no', Canada:'ca', Colombia:'co',
+  Egypt:'eg', Belgium:'be', Switzerland:'ch', Uruguay:'uy', Denmark:'dk', Sweden:'se',
+  Scotland:'gb-sct', Wales:'gb-wls', Algeria:'dz', Austria:'at', Iraq:'iq', Ghana:'gh',
+  Australia:'au', Iran:'ir', Jordan:'jo', 'South Korea':'kr', 'Korea Republic':'kr',
+  Qatar:'qa', 'Saudi Arabia':'sa', Uzbekistan:'uz', 'Cape Verde':'cv', 'Cabo Verde':'cv',
+  'Congo DR':'cd', 'DR Congo':'cd', 'Côte d\'Ivoire':'ci', 'Ivory Coast':'ci', Tunisia:'tn',
+  'South Africa':'za', 'New Zealand':'nz', Curaçao:'cw', Ecuador:'ec', Paraguay:'py',
+  Italy:'it', Poland:'pl', Türkiye:'tr', Turkey:'tr', 'Bosnia and Herzegovina':'ba',
+  Czechia:'cz', 'Czech Republic':'cz', Panama:'pa', Honduras:'hn', 'Costa Rica':'cr',
+};
+const FLAG = t => CC[t] ? `https://flagcdn.com/w40/${CC[t]}.png` : null;
 const initials = name => (name||'?').split(/[\s.]+/).filter(Boolean).map(x=>x[0]).slice(0,2).join('').toUpperCase();
 
 const LB = {paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
@@ -374,9 +392,14 @@ function renderScorers(){
 function renderTeams(){
   const teams = [...(DATA.teams||[])].sort((a,b)=>b.points-a.points || b.GD-a.GD);
   if(!teams.length) return;
-  document.getElementById('team-cards').innerHTML = teams.map(t=>`
+  document.getElementById('team-cards').innerHTML = teams.map(t=>{
+    const flag = FLAG(t.team);
+    const badge = flag
+      ? `<img class="flag" src="${flag}" alt="${t.team}" style="width:46px;height:32px;border-radius:4px;object-fit:cover;flex-shrink:0" onerror="this.outerHTML='<div class=&quot;avatar&quot; style=&quot;background:${colorFor(t.team)}22;border:2px solid ${colorFor(t.team)}55;width:46px;height:46px;flex-shrink:0&quot;>${initials(t.team)}</div>'">`
+      : `<div class="avatar" style="background:${colorFor(t.team)}22;border:2px solid ${colorFor(t.team)}55;width:46px;height:46px;flex-shrink:0">${initials(t.team)}</div>`;
+    return `
     <div class="team-card">
-      <div class="avatar" style="background:${colorFor(t.team)}22;border:2px solid ${colorFor(t.team)}55;width:46px;height:46px;flex-shrink:0">${initials(t.team)}</div>
+      ${badge}
       <div class="info">
         <div class="tname">${t.team} <span style="color:var(--gold);font-size:.78em">${t.points}pts</span> <span style="color:var(--muted);font-size:.7em">Grp ${t.group}</span></div>
         <div class="wdl">
@@ -390,7 +413,8 @@ function renderTeams(){
           <span class="xg-num">GD <span>${t.GD>0?'+':''}${t.GD}</span></span>
         </div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 
   const byPts = [...teams].sort((a,b)=>a.points-b.points);
   Plotly.newPlot('chart-points',[{
