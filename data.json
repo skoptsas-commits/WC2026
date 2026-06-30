@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-30T18:54:56+00:00",
+  "updated_at": "2026-06-30T22:53:27+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -630,6 +630,15 @@
   ],
   "players": [
     {
+      "player": "Kylian Mbappé",
+      "team": "France",
+      "nation": "FRA",
+      "g": 6,
+      "a": 2,
+      "pen": 0,
+      "played": 4
+    },
+    {
       "player": "Lionel Messi",
       "team": "Argentina",
       "nation": "ARG",
@@ -657,22 +666,13 @@
       "played": 4
     },
     {
-      "player": "Kylian Mbappé",
+      "player": "Ousmane Dembélé",
       "team": "France",
       "nation": "FRA",
       "g": 4,
       "a": 2,
       "pen": 0,
-      "played": 3
-    },
-    {
-      "player": "Ousmane Dembélé",
-      "team": "France",
-      "nation": "FRA",
-      "g": 4,
-      "a": 1,
-      "pen": 0,
-      "played": 3
+      "played": 4
     },
     {
       "player": "Ismael Saibari",
@@ -843,7 +843,7 @@
       "g": 2,
       "a": 0,
       "pen": 0,
-      "played": 3
+      "played": 4
     },
     {
       "player": "Maximiliano Araújo",
@@ -862,6 +862,15 @@
       "a": 1,
       "pen": 0,
       "played": 3
+    },
+    {
+      "player": "Bradley Barcola",
+      "team": "France",
+      "nation": "FRA",
+      "g": 2,
+      "a": 1,
+      "pen": 0,
+      "played": 4
     },
     {
       "player": "Marko Arnautovic",
@@ -889,15 +898,6 @@
       "a": 0,
       "pen": 0,
       "played": 2
-    },
-    {
-      "player": "Ruben Vargas",
-      "team": "Switzerland",
-      "nation": "SWI",
-      "g": 2,
-      "a": 1,
-      "pen": 0,
-      "played": 3
     }
   ]
 }
