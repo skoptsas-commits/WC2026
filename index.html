@@ -201,107 +201,48 @@ main{padding:22px 18px 60px;max-width:1400px;margin:0 auto}
     </div>
   </div>
   <nav id="mainnav">
-    <button class="active" onclick="showTab('value',this)">💎 PRODUCTION</button>
-    <button onclick="showTab('scorers',this)" id="btn-scorers">⚽ SCORERS</button>
-    <button onclick="showTab('teams',this)">🛡️ TEAMS</button>
-    <button onclick="showTab('xg',this)">📍 xG</button>
-    <button onclick="showTab('defense',this)">🔒 DEFENCE</button>
+    <button class="active" onclick="showTab('scorers',this)">⚽ TOP SCORERS</button>
+    <button onclick="showTab('teams',this)">🛡️ STANDINGS</button>
+    <button onclick="showTab('goals',this)">📊 GOALS ANALYSIS</button>
   </nav>
 </header>
 
-<!-- ── Recent results strip ─────────────────────────────────────── -->
-<div class="results-strip">
-  <div class="results-label">📅 Recent Results — Group Stage</div>
-  <div class="results-strip-inner" id="results-strip"></div>
-</div>
-
 <main>
 
-<!-- ═══════════════════════════════════════ VALUE WATCH ══════════ -->
-<div id="tab-value" class="tab active">
-  <div class="section-label">Featured Analysis</div>
-  <div class="section-title">💎 Production Leaders <span>Output per 90′ · WC 2026</span></div>
-
-  <!-- Methodology explanation -->
-  <details class="methodology-card">
-    <summary>How is the Production score calculated?</summary>
-    <div class="method-body">
-      <p>FBref doesn't publish transfer values, so instead of a price-based "value" metric this dashboard ranks players purely on <strong style="color:#fff">on-pitch output, normalised per 90 minutes</strong>. That keeps every number traceable to a real FBref stat.</p>
-      <div class="formula">
-        Production / 90 = (Goals + Assists + xG + xAG) ÷ (Minutes ÷ 90)
-      </div>
-      <p>A second view splits players by <strong style="color:#fff">finishing vs chance quality</strong>:</p>
-      <div class="formula">
-        G − xG  →  positive = clinical/overperforming · negative = wasteful/underperforming
-      </div>
-      <p style="margin-top:12px"><strong style="color:var(--green)">▲ Clinical</strong> = scoring above expected &nbsp;·&nbsp; <strong style="color:#ff4d6d">▼ Wasteful</strong> = scoring below expected.<br>
-      All data: FBref.com · min 90 minutes played.</p>
-    </div>
-  </details>
-
-  <div class="stat-row" id="value-stat-row"></div>
-
-  <div class="verdict-section">
-    <div class="verdict-block">
-      <h2><span class="v-green">▲ CLINICAL — beating their xG</span></h2>
-      <div id="undervalued-cards"></div>
-    </div>
-    <div class="verdict-block">
-      <h2><span class="v-red">▼ WASTEFUL — below their xG</span></h2>
-      <div id="overvalued-cards"></div>
-    </div>
-  </div>
-
-  <div class="chart-card">
-    <h3>Production / 90 vs Minutes played <small>◆ colour = G − xG (clinical → wasteful)</small></h3>
-    <div id="chart-value" style="height:500px"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════ SCORERS ══════════ -->
-<div id="tab-scorers" class="tab">
+<!-- ═══════════════════════════════════ TOP SCORERS ═════════════ -->
+<div id="tab-scorers" class="tab active">
   <div class="section-label">Individual Stats</div>
-  <div class="section-title">⚽ Top Scorers <span>Goals · xG · Assists</span></div>
+  <div class="section-title">⚽ Top Scorers <span>Goals · Assists · WC 2026</span></div>
+  <div class="stat-row" id="scorer-stat-row"></div>
   <div id="scorer-cards" class="player-grid"></div>
   <div class="chart-card">
-    <h3>Goals vs xG per player <small>white ◇ = xG marker</small></h3>
-    <div id="chart-scorers" style="height:500px"></div>
+    <h3>Goals &amp; Assists — top scorers</h3>
+    <div id="chart-scorers" style="height:520px"></div>
   </div>
 </div>
 
-<!-- ═════════════════════════════════════════════ TEAMS ══════════ -->
+<!-- ═══════════════════════════════════════ STANDINGS ═══════════ -->
 <div id="tab-teams" class="tab">
   <div class="section-label">Team Rankings</div>
-  <div class="section-title">🛡️ Group Stage Standings</div>
+  <div class="section-title">🛡️ Standings <span>Points · Goal Difference</span></div>
   <div id="team-cards" class="team-grid"></div>
   <div class="grid2">
-    <div class="chart-card"><h3>Win / Draw / Loss %</h3><div id="chart-wdl" style="height:480px"></div></div>
-    <div class="chart-card"><h3>Possession %</h3><div id="chart-poss" style="height:480px"></div></div>
+    <div class="chart-card"><h3>Points by team</h3><div id="chart-points" style="height:520px"></div></div>
+    <div class="chart-card"><h3>Win / Draw / Loss %</h3><div id="chart-wdl" style="height:520px"></div></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════ xG ════════ -->
-<div id="tab-xg" class="tab">
-  <div class="section-label">Expected Goals</div>
-  <div class="section-title">📍 xG Analysis</div>
+<!-- ═══════════════════════════════════ GOALS ANALYSIS ══════════ -->
+<div id="tab-goals" class="tab">
+  <div class="section-label">Tournament Output</div>
+  <div class="section-title">📊 Goals Analysis <span>Scoring &amp; defence by team</span></div>
   <div class="chart-card">
-    <h3>Team xG For vs xG Against <small>top-left = elite · bottom-right = danger zone</small></h3>
-    <div id="chart-xg-team" style="height:540px"></div>
+    <h3>Goals For vs Goals Against <small>top-left = strong attack &amp; defence</small></h3>
+    <div id="chart-gfga" style="height:540px"></div>
   </div>
   <div class="chart-card">
-    <h3>Player Goals vs xG <small>above line = outperforming expected</small></h3>
-    <div id="chart-xg-players" style="height:500px"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════ DEFENCE ══════════ -->
-<div id="tab-defense" class="tab">
-  <div class="section-label">Defensive Actions</div>
-  <div class="section-title">🔒 Top Defenders</div>
-  <div id="def-cards" class="player-grid"></div>
-  <div class="grid2">
-    <div class="chart-card"><h3>Tackles</h3><div id="chart-tackles" style="height:400px"></div></div>
-    <div class="chart-card"><h3>Interceptions</h3><div id="chart-int" style="height:400px"></div></div>
+    <h3>Goal Difference by team</h3>
+    <div id="chart-gd" style="height:500px"></div>
   </div>
 </div>
 
@@ -311,35 +252,30 @@ main{padding:22px 18px 60px;max-width:1400px;margin:0 auto}
 <script>
 // ═══════════════════════════════════════════════════════════════
 //  WORLD CUP 2026 DASHBOARD — data-driven from data.json
-//  (data.json is produced by fetch_data.py via GitHub Actions)
+//  (data.json is produced by fetch_data.py via GitHub Actions,
+//   sourced from football-data.org)
 // ═══════════════════════════════════════════════════════════════
-
-// Team brand colours (cosmetic only; unknown teams fall back to grey)
 const TC = {
   Argentina:'#74ACDF', France:'#002395',   Brazil:'#009C3B',  England:'#CF091D',
   Spain:'#AA151B',     Germany:'#000000',  Portugal:'#006600',Netherlands:'#FF6600',
   Morocco:'#C1272D',   Japan:'#BC002D',    'United States':'#002868', USA:'#002868',
   Mexico:'#006847',    Croatia:'#FF0000',  Senegal:'#00853F', Norway:'#EF2B2D',
-  Canada:'#FF0000',    Colombia:'#FCD116', Egypt:'#C8102E',   Scotland:'#005EB8',
-  Belgium:'#E30613',   Switzerland:'#FF0000', Uruguay:'#5CBFEB', Denmark:'#C8102E',
+  Canada:'#FF0000',    Colombia:'#FCD116', Egypt:'#C8102E',   Belgium:'#E30613',
+  Switzerland:'#FF0000', Uruguay:'#5CBFEB', Denmark:'#C8102E', Sweden:'#FECC00',
 };
 const colorFor = t => TC[t] || '#555a78';
-const initials = name => name.split(/[\s.]+/).filter(Boolean).map(x=>x[0]).slice(0,2).join('').toUpperCase();
+const initials = name => (name||'?').split(/[\s.]+/).filter(Boolean).map(x=>x[0]).slice(0,2).join('').toUpperCase();
 
-// Plotly base layout (dark, transparent)
 const LB = {paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
             font:{color:'#ccc',family:'Segoe UI'}, margin:{t:30,b:50,l:10,r:10},
             template:'plotly_dark'};
 const GR = '#2a2a3d';
 
-// ═══════════════════════════════════════════════════════════════
-//  LOAD DATA
-// ═══════════════════════════════════════════════════════════════
 let DATA = null;
 
 async function boot(){
   try{
-    const res = await fetch('data.json?_=' + Date.now());   // cache-bust
+    const res = await fetch('data.json?_=' + Date.now());
     if(!res.ok) throw new Error('HTTP ' + res.status);
     DATA = await res.json();
   }catch(e){
@@ -354,14 +290,11 @@ async function boot(){
 function renderAll(){
   stampHeader();
   renderTicker();
-  renderProduction();
   renderScorers();
   renderTeams();
-  renderXG();
-  renderDefence();
+  renderGoals();
 }
 
-// ── Header timestamp ───────────────────────────────────────────
 function stampHeader(){
   const el = document.getElementById('updated-stamp');
   if(DATA.updated_at){
@@ -369,109 +302,45 @@ function stampHeader(){
     el.textContent = 'Updated ' + d.toLocaleString('en-GB',
       {day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) + ' UTC';
   }
-  if(DATA._note){               // sample data — be honest about it
-    document.getElementById('data-badge').textContent = 'SAMPLE';
-    document.getElementById('data-badge').style.background = 'var(--orange)';
-  }
+  const badge = document.getElementById('data-badge');
+  if(DATA._note){ badge.textContent = 'SAMPLE'; badge.style.background = 'var(--orange)'; }
+  else { badge.textContent = 'football-data.org'; }
 }
 
-// ── Ticker (top scorers + team form) ───────────────────────────
 function renderTicker(){
   const items = [];
-  (DATA.players||[]).slice(0,6).forEach(p=>{
-    items.push(`⚽ ${p.player} — ${p.g}G ${p.a}A`);
-  });
-  (DATA.teams||[]).slice(0,6).forEach(t=>{
-    items.push(`${t.team} ${t.W}W-${t.D}D-${t.L}L`);
-  });
-  if(!items.length){ items.push('Awaiting first completed matches…'); }
+  (DATA.players||[]).slice(0,6).forEach(p=> items.push(`⚽ ${p.player} — ${p.g}G ${p.a}A`));
+  (DATA.teams||[]).slice(0,8).forEach(t=> items.push(`${t.team} ${t.points}pts`));
+  if(!items.length) items.push('Awaiting first results…');
   const html = items.map(s=>`<span>${s}</span><span class="sep"> | </span>`).join('');
-  document.getElementById('ticker-inner').innerHTML = html + html; // duplicate for seamless loop
+  document.getElementById('ticker-inner').innerHTML = html + html;
 }
 
-// ═══════════════════════════════════════════════════════════════
-//  TAB 1 — PRODUCTION
-// ═══════════════════════════════════════════════════════════════
-function renderProduction(){
-  const players = DATA.players || [];
-  if(!players.length) return;
-
-  // Stat cards
-  const byProd = [...players].sort((a,b)=>b.prod_per90-a.prod_per90);
-  const byClin = [...players].sort((a,b)=>b.g_minus_xg-a.g_minus_xg);
-  const topProd = byProd[0], mostClin = byClin[0], mostWast = byClin[byClin.length-1];
-  document.getElementById('value-stat-row').innerHTML = `
-    <div class="stat-card"><div class="num">${players.length}</div>
-      <div class="lbl">Players analysed</div><div class="sub">min 90 min played</div></div>
-    <div class="stat-card"><div class="num" style="font-size:1.05em">${topProd.player}</div>
-      <div class="lbl">Top production / 90′</div><div class="sub">${topProd.prod_per90.toFixed(2)}</div></div>
-    <div class="stat-card"><div class="num" style="color:var(--green);font-size:1.05em">${mostClin.player}</div>
-      <div class="lbl">Most clinical</div><div class="sub">+${mostClin.g_minus_xg.toFixed(1)} vs xG</div></div>
-    <div class="stat-card"><div class="num" style="color:#ff4d6d;font-size:1.05em">${mostWast.player}</div>
-      <div class="lbl">Most wasteful</div><div class="sub">${mostWast.g_minus_xg.toFixed(1)} vs xG</div></div>`;
-
-  // Clinical / wasteful cards
-  const clinical = byClin.filter(p=>p.g_minus_xg>0).slice(0,4);
-  const wasteful = [...byClin].reverse().filter(p=>p.g_minus_xg<0).slice(0,4);
-  document.getElementById('undervalued-cards').innerHTML =
-    clinical.map(p=>prodCard(p,'under')).join('') || '<p style="color:var(--muted);font-size:.85em">No overperformers yet.</p>';
-  document.getElementById('overvalued-cards').innerHTML =
-    wasteful.map(p=>prodCard(p,'over')).join('') || '<p style="color:var(--muted);font-size:.85em">No underperformers yet.</p>';
-
-  // Scatter: production/90 vs minutes, coloured by G-xG
-  Plotly.newPlot('chart-value',[{
-    type:'scatter', mode:'markers+text',
-    x:players.map(p=>p.min), y:players.map(p=>p.prod_per90),
-    text:players.map(p=>p.player), textposition:'top center', textfont:{size:10},
-    marker:{size:13, color:players.map(p=>p.g_minus_xg), colorscale:'RdYlGn',
-            showscale:true, colorbar:{title:'G − xG', len:.75}, cmin:-2, cmid:0, cmax:2},
-    hovertemplate:'<b>%{text}</b><br>%{x} min · %{y:.2f} prod/90<extra></extra>'
-  }],{...LB, xaxis:{title:'Minutes played', gridcolor:GR},
-      yaxis:{title:'Production / 90′', gridcolor:GR}, height:500});
-}
-
-function prodCard(p, type){
-  const color = colorFor(p.team);
-  const bc = type==='under' ? 'badge-green' : 'badge-red';
-  const bt = (p.g_minus_xg>0?'+':'') + p.g_minus_xg.toFixed(1) + ' vs xG';
-  return `
-  <div class="player-card" style="margin-bottom:10px">
-    <div class="top-bar" style="background:${color}"></div>
-    <div class="body">
-      <span class="badge ${bc}">${bt}</span>
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-        <div class="avatar" style="background:${color}22;border-color:${color}55;font-size:1.05em">${initials(p.player)}</div>
-        <div>
-          <div class="pname">${p.player}</div>
-          <div class="flag-name"><span class="nation">${p.team}</span></div>
-        </div>
-      </div>
-      <div class="stats">
-        <div class="stat"><div class="v">${p.g}</div><div class="k">Goals</div></div>
-        <div class="stat"><div class="v">${p.xg.toFixed(1)}</div><div class="k">xG</div></div>
-        <div class="stat"><div class="v">${p.a}</div><div class="k">Assists</div></div>
-        <div class="stat"><div class="v" style="color:var(--gold)">${p.prod_per90.toFixed(2)}</div><div class="k">Prod/90</div></div>
-      </div>
-    </div>
-  </div>`;
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  TAB 2 — SCORERS
-// ═══════════════════════════════════════════════════════════════
+// ── TOP SCORERS ───────────────────────────────────────────────
 function renderScorers(){
-  const players = [...(DATA.players||[])].sort((a,b)=>b.g-a.g).slice(0,12);
+  const players = [...(DATA.players||[])].sort((a,b)=>b.g-a.g);
   if(!players.length) return;
-  document.getElementById('scorer-cards').innerHTML = players.map((p,i)=>{
+  const topG = players[0];
+  const totalGoals = players.reduce((s,p)=>s+p.g,0);
+  const byAssists = [...players].sort((a,b)=>b.a-a.a)[0];
+  document.getElementById('scorer-stat-row').innerHTML = `
+    <div class="stat-card"><div class="num">${players.length}</div>
+      <div class="lbl">Scorers tracked</div><div class="sub">top of the tournament</div></div>
+    <div class="stat-card"><div class="num" style="font-size:1.05em">${topG.player}</div>
+      <div class="lbl">Golden Boot lead</div><div class="sub">${topG.g} goals</div></div>
+    <div class="stat-card"><div class="num" style="color:var(--green);font-size:1.05em">${byAssists.player}</div>
+      <div class="lbl">Most assists</div><div class="sub">${byAssists.a} assists</div></div>
+    <div class="stat-card"><div class="num">${totalGoals}</div>
+      <div class="lbl">Goals (top scorers)</div><div class="sub">combined</div></div>`;
+
+  document.getElementById('scorer-cards').innerHTML = players.slice(0,12).map((p,i)=>{
     const color = colorFor(p.team), rank = i+1;
-    const diff = p.g_minus_xg;
-    const badge = diff>0 ? `<span class="badge badge-green">+${diff.toFixed(1)} vs xG</span>`
-                : diff<0 ? `<span class="badge badge-red">${diff.toFixed(1)} vs xG</span>` : '';
+    const penBadge = p.pen>0 ? `<span class="badge badge-red">${p.pen} pen</span>` : '';
     return `
     <div class="player-card">
       <div class="top-bar" style="background:${color}"></div>
       <div class="body">
-        ${badge}
+        ${penBadge}
         <div class="scorer-layout">
           <div class="scorer-rank ${rank<=3?'top3':''}">#${rank}</div>
           <div class="photo-wrap" style="background:${color}22;border-color:${color}44"><span style="font-size:1.3em">${initials(p.player)}</span></div>
@@ -482,147 +351,84 @@ function renderScorers(){
         </div>
         <div class="stats">
           <div class="stat"><div class="v">${p.g}</div><div class="k">Goals</div></div>
-          <div class="stat"><div class="v">${p.xg.toFixed(1)}</div><div class="k">xG</div></div>
           <div class="stat"><div class="v">${p.a}</div><div class="k">Assists</div></div>
-          <div class="stat"><div class="v">${p.min}'</div><div class="k">Minutes</div></div>
+          <div class="stat"><div class="v">${p.pen}</div><div class="k">Penalties</div></div>
+          <div class="stat"><div class="v">${p.played}</div><div class="k">Matches</div></div>
         </div>
       </div>
     </div>`;
   }).join('');
 
-  // Goals vs xG bar+marker
-  const sc = players;
+  const sc = players.slice(0,12);
   Plotly.newPlot('chart-scorers',[
-    {type:'bar', orientation:'h', y:sc.map(p=>p.player), x:sc.map(p=>p.g), name:'Goals',
-     marker:{color:sc.map(p=>p.xg), colorscale:'YlOrRd', showscale:true, colorbar:{title:'xG',len:.65}},
+    {type:'bar', orientation:'h', y:sc.map(p=>p.player), x:sc.map(p=>p.g), name:'Goals', marker:{color:'#E8003D'},
      hovertemplate:'<b>%{y}</b><br>Goals: %{x}<extra></extra>'},
-    {type:'scatter', mode:'markers', y:sc.map(p=>p.player), x:sc.map(p=>p.xg), name:'xG',
-     marker:{color:'white', size:9, symbol:'diamond'},
-     hovertemplate:'<b>%{y}</b><br>xG: %{x:.2f}<extra></extra>'}
-  ],{...LB, barmode:'overlay', xaxis:{title:'Goals / xG', gridcolor:GR, dtick:1},
+    {type:'bar', orientation:'h', y:sc.map(p=>p.player), x:sc.map(p=>p.a), name:'Assists', marker:{color:'#00c46a'},
+     hovertemplate:'<b>%{y}</b><br>Assists: %{x}<extra></extra>'}
+  ],{...LB, barmode:'group', xaxis:{title:'Count', gridcolor:GR, dtick:1},
      yaxis:{categoryorder:'array', categoryarray:[...sc.map(p=>p.player)].reverse(), gridcolor:GR},
-     legend:{orientation:'h', y:1.05}, height:500});
+     legend:{orientation:'h', y:1.05}, height:520});
 }
 
-// ═══════════════════════════════════════════════════════════════
-//  TAB 3 — TEAMS
-// ═══════════════════════════════════════════════════════════════
+// ── STANDINGS ─────────────────────────────────────────────────
 function renderTeams(){
-  const teams = DATA.teams || [];
+  const teams = [...(DATA.teams||[])].sort((a,b)=>b.points-a.points || b.GD-a.GD);
   if(!teams.length) return;
-  const sorted = [...teams].sort((a,b)=>(b.W*3+b.D)-(a.W*3+a.D));
-  document.getElementById('team-cards').innerHTML = sorted.map(t=>`
+  document.getElementById('team-cards').innerHTML = teams.map(t=>`
     <div class="team-card">
       <div class="avatar" style="background:${colorFor(t.team)}22;border:2px solid ${colorFor(t.team)}55;width:46px;height:46px;flex-shrink:0">${initials(t.team)}</div>
       <div class="info">
-        <div class="tname">${t.team} <span style="color:var(--gold);font-size:.78em">${t.W*3+t.D}pts</span></div>
+        <div class="tname">${t.team} <span style="color:var(--gold);font-size:.78em">${t.points}pts</span> <span style="color:var(--muted);font-size:.7em">Grp ${t.group}</span></div>
         <div class="wdl">
           <span class="wdl-item w-item">W${t.W}</span>
           <span class="wdl-item d-item">D${t.D}</span>
           <span class="wdl-item l-item">L${t.L}</span>
         </div>
         <div class="xg-row">
-          <span class="xg-num">xG <span>${t.xG}</span></span>
-          <span class="xg-num">xGA <span>${t.xGA}</span></span>
           <span class="xg-num">GF <span>${t.GF}</span></span>
+          <span class="xg-num">GA <span>${t.GA}</span></span>
+          <span class="xg-num">GD <span>${t.GD>0?'+':''}${t.GD}</span></span>
         </div>
       </div>
     </div>`).join('');
 
-  // Win/Draw/Loss %
-  const tS = [...teams].sort((a,b)=>(a.W/a.MP)-(b.W/b.MP));
+  const byPts = [...teams].sort((a,b)=>a.points-b.points);
+  Plotly.newPlot('chart-points',[{
+    type:'bar', orientation:'h', y:byPts.map(t=>t.team), x:byPts.map(t=>t.points),
+    marker:{color:byPts.map(t=>t.points), colorscale:[[0,'#1a1a3a'],[1,'#FFD700']], showscale:false},
+    hovertemplate:'<b>%{y}</b><br>%{x} pts<extra></extra>'
+  }],{...LB, xaxis:{title:'Points', gridcolor:GR, dtick:1}, yaxis:{gridcolor:GR}, height:520});
+
+  const tS = [...teams].filter(t=>t.MP>0).sort((a,b)=>(a.W/a.MP)-(b.W/b.MP));
   const tn = tS.map(t=>t.team);
   Plotly.newPlot('chart-wdl',[
     {type:'bar',orientation:'h',y:tn,x:tS.map(t=>+(t.W/t.MP*100).toFixed(1)),name:'Win',marker:{color:'#00c46a'}},
     {type:'bar',orientation:'h',y:tn,x:tS.map(t=>+(t.D/t.MP*100).toFixed(1)),name:'Draw',marker:{color:'#ff8c00'}},
     {type:'bar',orientation:'h',y:tn,x:tS.map(t=>+(t.L/t.MP*100).toFixed(1)),name:'Loss',marker:{color:'#E8003D'}},
   ],{...LB,barmode:'stack',xaxis:{title:'%',gridcolor:GR},yaxis:{gridcolor:GR},
-     legend:{orientation:'h',y:1.05},height:480});
-
-  // Goals For bar (possession isn't in our JSON; show GF instead — honest)
-  const gs = [...teams].sort((a,b)=>a.GF-b.GF);
-  Plotly.newPlot('chart-poss',[{
-    type:'bar',orientation:'h',y:gs.map(t=>t.team),x:gs.map(t=>t.GF),
-    marker:{color:gs.map(t=>t.GF),colorscale:[[0,'#1a1a3a'],[1,'#0066ff']],showscale:false},
-    hovertemplate:'<b>%{y}</b><br>%{x} goals<extra></extra>'
-  }],{...LB,xaxis:{title:'Goals For',gridcolor:GR,dtick:1},yaxis:{gridcolor:GR},height:480});
+     legend:{orientation:'h',y:1.05},height:520});
 }
 
-// ═══════════════════════════════════════════════════════════════
-//  TAB 4 — xG
-// ═══════════════════════════════════════════════════════════════
-function renderXG(){
+// ── GOALS ANALYSIS ────────────────────────────────────────────
+function renderGoals(){
   const teams = DATA.teams || [];
-  if(teams.length){
-    const xgF=teams.map(t=>t.xG), xgA=teams.map(t=>t.xGA);
-    const xgD=teams.map(t=>+(t.GF-t.xG).toFixed(1));
-    const avgF=xgF.reduce((a,b)=>a+b,0)/xgF.length, avgA=xgA.reduce((a,b)=>a+b,0)/xgA.length;
-    Plotly.newPlot('chart-xg-team',[{
-      type:'scatter',mode:'markers+text',x:xgF,y:xgA,text:teams.map(t=>t.team),textposition:'top center',
-      marker:{size:16,color:xgD,colorscale:'RdYlGn',showscale:true,colorbar:{title:'GF−xG'},cmin:-2,cmid:0,cmax:2},
-      hovertemplate:'<b>%{text}</b><br>xG For: %{x:.1f}<br>xG Ag: %{y:.1f}<extra></extra>'
-    },{type:'scatter',mode:'lines',x:[Math.min(...xgF)-1,Math.max(...xgF)+1],y:[avgA,avgA],line:{dash:'dot',color:'#333'},showlegend:false},
-     {type:'scatter',mode:'lines',x:[avgF,avgF],y:[Math.min(...xgA)-1,Math.max(...xgA)+1],line:{dash:'dot',color:'#333'},showlegend:false}
-    ],{...LB,xaxis:{title:'xG For',gridcolor:GR},yaxis:{title:'xG Against',gridcolor:GR},height:540});
-  }
-  const players = DATA.players || [];
-  if(players.length){
-    const pXG=players.map(p=>p.xg), pG=players.map(p=>p.g);
-    const mx=Math.max(...pXG,...pG)+.5;
-    Plotly.newPlot('chart-xg-players',[{
-      type:'scatter',mode:'markers+text',x:pXG,y:pG,text:players.map(p=>p.player),textposition:'top center',
-      marker:{size:13,color:players.map(p=>p.g_minus_xg),colorscale:'RdYlGn',showscale:true,colorbar:{title:'G−xG'},cmin:-2,cmid:0,cmax:2},
-      hovertemplate:'<b>%{text}</b><br>xG: %{x:.2f}<br>Goals: %{y}<extra></extra>'
-    },{type:'scatter',mode:'lines',x:[0,mx],y:[0,mx],line:{dash:'dot',color:'#444'},showlegend:false}
-    ],{...LB,xaxis:{title:'xG',gridcolor:GR,range:[0,mx]},yaxis:{title:'Actual Goals',gridcolor:GR,range:[0,mx]},height:500});
-  }
+  if(!teams.length) return;
+  const gf=teams.map(t=>t.GF), ga=teams.map(t=>t.GA);
+  Plotly.newPlot('chart-gfga',[{
+    type:'scatter', mode:'markers+text', x:gf, y:ga, text:teams.map(t=>t.team), textposition:'top center',
+    marker:{size:15, color:teams.map(t=>t.GD), colorscale:'RdYlGn', showscale:true, colorbar:{title:'GD'}, cmin:-6, cmid:0, cmax:6},
+    hovertemplate:'<b>%{text}</b><br>GF: %{x}<br>GA: %{y}<extra></extra>'
+  }],{...LB, xaxis:{title:'Goals For', gridcolor:GR}, yaxis:{title:'Goals Against', gridcolor:GR}, height:540});
+
+  const byGD = [...teams].sort((a,b)=>a.GD-b.GD);
+  Plotly.newPlot('chart-gd',[{
+    type:'bar', orientation:'h', y:byGD.map(t=>t.team), x:byGD.map(t=>t.GD),
+    marker:{color:byGD.map(t=>t.GD), colorscale:'RdYlGn', cmin:-6, cmid:0, cmax:6, showscale:false},
+    hovertemplate:'<b>%{y}</b><br>GD: %{x}<extra></extra>'
+  }],{...LB, xaxis:{title:'Goal Difference', gridcolor:GR, dtick:1}, yaxis:{gridcolor:GR}, height:500});
 }
 
-// ═══════════════════════════════════════════════════════════════
-//  TAB 5 — DEFENCE
-// ═══════════════════════════════════════════════════════════════
-function renderDefence(){
-  const defs = DATA.defenders || [];
-  const cont = document.getElementById('def-cards');
-  if(!defs.length){
-    cont.innerHTML = '<p style="color:var(--muted);font-size:.9em">Defensive data not available yet.</p>';
-    return;
-  }
-  cont.innerHTML = defs.map(d=>{
-    const color=colorFor(d.team);
-    return `
-    <div class="player-card">
-      <div class="top-bar" style="background:${color}"></div>
-      <div class="body">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-          <div class="avatar" style="background:${color}22;border-color:${color}55">${initials(d.player)}</div>
-          <div>
-            <div class="pname">${d.player}</div>
-            <div class="flag-name"><span class="nation">${d.team}</span></div>
-          </div>
-        </div>
-        <div class="stats">
-          <div class="stat"><div class="v">${d.tkl}</div><div class="k">Tackles</div></div>
-          <div class="stat"><div class="v">${d.int}</div><div class="k">Interceptions</div></div>
-          <div class="stat" style="grid-column:1/-1"><div class="v">${d.clr}</div><div class="k">Clearances</div></div>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-
-  const tkl=[...defs].sort((a,b)=>a.tkl-b.tkl);
-  Plotly.newPlot('chart-tackles',[{type:'bar',orientation:'h',y:tkl.map(d=>d.player),x:tkl.map(d=>d.tkl),
-    marker:{color:'#0066ff'},hovertemplate:'<b>%{y}</b><br>%{x}<extra></extra>'}],
-    {...LB,xaxis:{title:'Tackles',gridcolor:GR,dtick:1},yaxis:{gridcolor:GR},height:400});
-  const int_=[...defs].sort((a,b)=>a.int-b.int);
-  Plotly.newPlot('chart-int',[{type:'bar',orientation:'h',y:int_.map(d=>d.player),x:int_.map(d=>d.int),
-    marker:{color:'#9b59b6'},hovertemplate:'<b>%{y}</b><br>%{x}<extra></extra>'}],
-    {...LB,xaxis:{title:'Interceptions',gridcolor:GR,dtick:1},yaxis:{gridcolor:GR},height:400});
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  TAB NAVIGATION
-// ═══════════════════════════════════════════════════════════════
+// ── TAB NAV ───────────────────────────────────────────────────
 function showTab(id,btn){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('#mainnav button').forEach(b=>b.classList.remove('active'));
@@ -631,7 +437,6 @@ function showTab(id,btn){
   setTimeout(()=>window.dispatchEvent(new Event('resize')),60);
 }
 
-// GO
 boot();
 </script>
 </body>
