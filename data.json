@@ -1,0 +1,21 @@
+{
+  "updated_at": "2026-06-29T00:00:00+00:00",
+  "league": "INT-World Cup",
+  "season": "2026",
+  "_note": "SAMPLE schema only — replaced automatically by GitHub Actions once the real fetch runs.",
+  "teams": [
+    {"team": "Germany", "MP": 3, "W": 3, "D": 0, "L": 0, "GF": 9, "GA": 2, "xG": 8.1, "xGA": 2.4, "win_pct": 100.0, "xGD": 5.7},
+    {"team": "Spain", "MP": 3, "W": 2, "D": 1, "L": 0, "GF": 7, "GA": 2, "xG": 6.8, "xGA": 1.9, "win_pct": 66.7, "xGD": 4.9},
+    {"team": "Argentina", "MP": 3, "W": 2, "D": 1, "L": 0, "GF": 5, "GA": 2, "xG": 4.6, "xGA": 2.1, "win_pct": 66.7, "xGD": 2.5},
+    {"team": "France", "MP": 3, "W": 2, "D": 0, "L": 1, "GF": 6, "GA": 3, "xG": 5.5, "xGA": 2.8, "win_pct": 66.7, "xGD": 2.7}
+  ],
+  "players": [
+    {"player": "Sample Player A", "team": "Germany", "nation": "GER", "min": 270, "g": 4, "a": 2, "xg": 3.1, "prod_per90": 3.37, "g_minus_xg": 0.9},
+    {"player": "Sample Player B", "team": "Spain", "nation": "ESP", "min": 250, "g": 3, "a": 3, "xg": 2.4, "prod_per90": 3.20, "g_minus_xg": 0.6},
+    {"player": "Sample Player C", "team": "Argentina", "nation": "ARG", "min": 270, "g": 3, "a": 1, "xg": 2.8, "prod_per90": 2.60, "g_minus_xg": 0.2}
+  ],
+  "defenders": [
+    {"player": "Sample Defender X", "team": "Germany", "nation": "GER", "tkl": 8, "int": 6, "clr": 9},
+    {"player": "Sample Defender Y", "team": "Spain", "nation": "ESP", "tkl": 7, "int": 5, "clr": 8}
+  ]
+}
