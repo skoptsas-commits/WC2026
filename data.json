@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-30T22:53:27+00:00",
+  "updated_at": "2026-07-01T11:41:37+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -675,6 +675,15 @@
       "played": 4
     },
     {
+      "player": "Julián Quiñones",
+      "team": "Mexico",
+      "nation": "COL",
+      "g": 3,
+      "a": 1,
+      "pen": 0,
+      "played": 4
+    },
+    {
       "player": "Ismael Saibari",
       "team": "Morocco",
       "nation": "MOR",
@@ -783,13 +792,13 @@
       "played": 3
     },
     {
-      "player": "Julián Quiñones",
+      "player": "Raúl Jiménez",
       "team": "Mexico",
-      "nation": "COL",
+      "nation": "MEX",
       "g": 2,
       "a": 0,
       "pen": 0,
-      "played": 3
+      "played": 4
     },
     {
       "player": "Cyle Larin",
@@ -889,15 +898,6 @@
       "a": 1,
       "pen": 0,
       "played": 3
-    },
-    {
-      "player": "Daniel Muñoz",
-      "team": "Colombia",
-      "nation": "COL",
-      "g": 2,
-      "a": 0,
-      "pen": 0,
-      "played": 2
     }
   ]
 }
