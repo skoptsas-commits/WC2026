@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-01T18:33:14+00:00",
+  "updated_at": "2026-07-02T10:19:51+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -684,11 +684,29 @@
       "played": 4
     },
     {
+      "player": "Ismaïla Sarr",
+      "team": "Senegal",
+      "nation": "SEN",
+      "g": 4,
+      "a": 1,
+      "pen": 0,
+      "played": 4
+    },
+    {
       "player": "Julián Quiñones",
       "team": "Mexico",
       "nation": "COL",
       "g": 3,
       "a": 1,
+      "pen": 0,
+      "played": 4
+    },
+    {
+      "player": "Folarin Balogun",
+      "team": "USA",
+      "nation": "USA",
+      "g": 3,
+      "a": 0,
       "pen": 0,
       "played": 4
     },
@@ -783,15 +801,6 @@
       "played": 4
     },
     {
-      "player": "Ismaïla Sarr",
-      "team": "Senegal",
-      "nation": "SEN",
-      "g": 3,
-      "a": 1,
-      "pen": 0,
-      "played": 3
-    },
-    {
       "player": "Raúl Jiménez",
       "team": "Mexico",
       "nation": "MEX",
@@ -808,15 +817,6 @@
       "a": 0,
       "pen": 0,
       "played": 4
-    },
-    {
-      "player": "Folarin Balogun",
-      "team": "USA",
-      "nation": "USA",
-      "g": 2,
-      "a": 0,
-      "pen": 0,
-      "played": 3
     },
     {
       "player": "Crysencio Summerville",
