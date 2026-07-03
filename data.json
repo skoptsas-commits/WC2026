@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-02T18:17:48+00:00",
+  "updated_at": "2026-07-03T06:03:50+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -675,6 +675,15 @@
       "played": 4
     },
     {
+      "player": "Mikel Oyarzabal",
+      "team": "Spain",
+      "nation": "SPA",
+      "g": 4,
+      "a": 1,
+      "pen": 0,
+      "played": 4
+    },
+    {
       "player": "Ousmane Dembélé",
       "team": "France",
       "nation": "FRA",
@@ -760,9 +769,9 @@
       "team": "Switzerland",
       "nation": "SWI",
       "g": 3,
-      "a": 1,
+      "a": 2,
       "pen": 0,
-      "played": 3
+      "played": 4
     },
     {
       "player": "Jonathan David",
@@ -801,6 +810,15 @@
       "played": 4
     },
     {
+      "player": "Cristiano Ronaldo",
+      "team": "Portugal",
+      "nation": "POR",
+      "g": 3,
+      "a": 0,
+      "pen": 1,
+      "played": 4
+    },
+    {
       "player": "Raúl Jiménez",
       "team": "Mexico",
       "nation": "MEX",
@@ -816,6 +834,15 @@
       "g": 2,
       "a": 0,
       "pen": 0,
+      "played": 4
+    },
+    {
+      "player": "Breel Embolo",
+      "team": "Switzerland",
+      "nation": "SWI",
+      "g": 2,
+      "a": 2,
+      "pen": 1,
       "played": 4
     },
     {
@@ -871,33 +898,192 @@
       "a": 1,
       "pen": 0,
       "played": 3
+    }
+  ],
+  "bracket": [
+    {
+      "stage": "LAST_16",
+      "label": "Round of 16",
+      "matches": [
+        {
+          "stage": "LAST_16",
+          "status": "TIMED",
+          "home": "Canada",
+          "away": "Morocco",
+          "hg": null,
+          "ag": null,
+          "winner": null,
+          "home_prob": 32,
+          "away_prob": 68
+        },
+        {
+          "stage": "LAST_16",
+          "status": "TIMED",
+          "home": "Paraguay",
+          "away": "France",
+          "hg": null,
+          "ag": null,
+          "winner": null,
+          "home_prob": 6,
+          "away_prob": 94
+        },
+        {
+          "stage": "LAST_16",
+          "status": "TIMED",
+          "home": "Brazil",
+          "away": "Norway",
+          "hg": null,
+          "ag": null,
+          "winner": null,
+          "home_prob": 71,
+          "away_prob": 29
+        },
+        {
+          "stage": "LAST_16",
+          "status": "TIMED",
+          "home": "Mexico",
+          "away": "England",
+          "hg": null,
+          "ag": null,
+          "winner": null,
+          "home_prob": 71,
+          "away_prob": 29
+        },
+        {
+          "stage": "LAST_16",
+          "status": "TIMED",
+          "home": "TBD",
+          "away": "TBD",
+          "hg": null,
+          "ag": null,
+          "winner": null
+        },
+        {
+          "stage": "LAST_16",
+          "status": "TIMED",
+          "home": "USA",
+          "away": "Belgium",
+          "hg": null,
+          "ag": null,
+          "winner": null,
+          "home_prob": 58,
+          "away_prob": 42
+        },
+        {
+          "stage": "LAST_16",
+          "status": "TIMED",
+          "home": "TBD",
+          "away": "TBD",
+          "hg": null,
+          "ag": null,
+          "winner": null
+        },
+        {
+          "stage": "LAST_16",
+          "status": "TIMED",
+          "home": "TBD",
+          "away": "TBD",
+          "hg": null,
+          "ag": null,
+          "winner": null
+        }
+      ]
     },
     {
-      "player": "Bradley Barcola",
-      "team": "France",
-      "nation": "FRA",
-      "g": 2,
-      "a": 1,
-      "pen": 0,
-      "played": 4
+      "stage": "QUARTER_FINALS",
+      "label": "Quarter-finals",
+      "matches": [
+        {
+          "stage": "QUARTER_FINALS",
+          "status": "TIMED",
+          "home": "TBD",
+          "away": "TBD",
+          "hg": null,
+          "ag": null,
+          "winner": null
+        },
+        {
+          "stage": "QUARTER_FINALS",
+          "status": "TIMED",
+          "home": "TBD",
+          "away": "TBD",
+          "hg": null,
+          "ag": null,
+          "winner": null
+        },
+        {
+          "stage": "QUARTER_FINALS",
+          "status": "TIMED",
+          "home": "TBD",
+          "away": "TBD",
+          "hg": null,
+          "ag": null,
+          "winner": null
+        },
+        {
+          "stage": "QUARTER_FINALS",
+          "status": "TIMED",
+          "home": "TBD",
+          "away": "TBD",
+          "hg": null,
+          "ag": null,
+          "winner": null
+        }
+      ]
     },
     {
-      "player": "Marko Arnautovic",
-      "team": "Austria",
-      "nation": "AUS",
-      "g": 2,
-      "a": 0,
-      "pen": 1,
-      "played": 4
+      "stage": "SEMI_FINALS",
+      "label": "Semi-finals",
+      "matches": [
+        {
+          "stage": "SEMI_FINALS",
+          "status": "TIMED",
+          "home": "TBD",
+          "away": "TBD",
+          "hg": null,
+          "ag": null,
+          "winner": null
+        },
+        {
+          "stage": "SEMI_FINALS",
+          "status": "TIMED",
+          "home": "TBD",
+          "away": "TBD",
+          "hg": null,
+          "ag": null,
+          "winner": null
+        }
+      ]
     },
     {
-      "player": "Jude Bellingham",
-      "team": "England",
-      "nation": "ENG",
-      "g": 2,
-      "a": 1,
-      "pen": 0,
-      "played": 4
+      "stage": "THIRD_PLACE",
+      "label": "Third place",
+      "matches": [
+        {
+          "stage": "THIRD_PLACE",
+          "status": "TIMED",
+          "home": "TBD",
+          "away": "TBD",
+          "hg": null,
+          "ag": null,
+          "winner": null
+        }
+      ]
+    },
+    {
+      "stage": "FINAL",
+      "label": "Final",
+      "matches": [
+        {
+          "stage": "FINAL",
+          "status": "TIMED",
+          "home": "TBD",
+          "away": "TBD",
+          "hg": null,
+          "ag": null,
+          "winner": null
+        }
+      ]
     }
   ]
 }
