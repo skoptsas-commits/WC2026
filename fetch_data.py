@@ -89,7 +89,74 @@ def get_players():
     return players
 
 
-# ── Main ───────────────────────────────────────────────────────────────
+# ── Knockout matches → bracket + win probabilities ────────────────────
+KO_STAGES = ["LAST_16", "QUARTER_FINALS", "SEMI_FINALS", "THIRD_PLACE", "FINAL"]
+KO_LABEL  = {"LAST_16":"Round of 16","QUARTER_FINALS":"Quarter-finals",
+             "SEMI_FINALS":"Semi-finals","THIRD_PLACE":"Third place","FINAL":"Final"}
+
+def _team_strength(teams):
+    """
+    Απλό, ειλικρινές rating ανά ομάδα από τη φάση ομίλων:
+    points/game (0-3) + goal-difference bonus. Χρησιμοποιείται ΜΟΝΟ για
+    εκτίμηση πιθανοτήτων — δεν είναι επίσημο νούμερο.
+    """
+    strength = {}
+    for t in teams:
+        mp = t["MP"] or 1
+        ppg = t["points"] / mp                 # 0..3
+        gd_per = t["GD"] / mp                   # goal diff per game
+        strength[t["team"]] = ppg + 0.35 * gd_per
+    return strength
+
+def _win_prob(a, b, strength):
+    """Λογιστική συνάρτηση πάνω στη διαφορά strength → πιθανότητα νίκης του a."""
+    import math
+    sa = strength.get(a, 1.0)
+    sb = strength.get(b, 1.0)
+    return round(1 / (1 + math.exp(-(sa - sb))) * 100)
+
+def get_bracket(teams):
+    """Knockout matches ανά stage, με εκτιμώμενες πιθανότητες νίκης."""
+    try:
+        data = api_get(f"/competitions/{COMPETITION}/matches")
+    except Exception as e:
+        print(f"ℹ️  Δεν τράβηξα knockout matches: {e}")
+        return []
+
+    strength = _team_strength(teams)
+    by_stage = {}
+    for m in data.get("matches", []):
+        stage = m.get("stage")
+        if stage not in KO_STAGES:
+            continue
+        home = m.get("homeTeam", {}) or {}
+        away = m.get("awayTeam", {}) or {}
+        hn = home.get("shortName") or home.get("name") or "TBD"
+        an = away.get("shortName") or away.get("name") or "TBD"
+        score = m.get("score", {}) or {}
+        full = score.get("fullTime", {}) or {}
+        winner = score.get("winner")   # HOME_TEAM / AWAY_TEAM / DRAW / None
+        entry = {
+            "stage":  stage,
+            "status": m.get("status", ""),      # SCHEDULED / FINISHED / ...
+            "home":   hn,
+            "away":   an,
+            "hg":     full.get("home"),
+            "ag":     full.get("away"),
+            "winner": winner,
+        }
+        # πιθανότητες μόνο αν ξέρουμε και τις δύο ομάδες
+        if hn != "TBD" and an != "TBD":
+            entry["home_prob"] = _win_prob(hn, an, strength)
+            entry["away_prob"] = 100 - entry["home_prob"]
+        by_stage.setdefault(stage, []).append(entry)
+
+    # επίστρεψε ταξινομημένα κατά στάδιο
+    out = []
+    for st in KO_STAGES:
+        if st in by_stage:
+            out.append({"stage": st, "label": KO_LABEL[st], "matches": by_stage[st]})
+    return out
 def main():
     if not TOKEN:
         print("❌ Λείπει το FOOTBALL_DATA_TOKEN environment variable.", file=sys.stderr)
@@ -101,6 +168,8 @@ def main():
     print(f"   ομάδες: {len(teams)}")
     players = get_players()
     print(f"   scorers: {len(players)}")
+    bracket = get_bracket(teams)
+    print(f"   knockout stages: {len(bracket)}")
 
     if not teams and not players:
         print("⚠️  Δεν επέστρεψε δεδομένα — δεν γράφω τίποτα.")
@@ -112,6 +181,7 @@ def main():
         "competition": COMPETITION,
         "teams": teams,
         "players": players,
+        "bracket": bracket,
     }
 
     OUT_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")

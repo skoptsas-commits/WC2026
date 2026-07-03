@@ -177,6 +177,29 @@ main{padding:22px 18px 60px;max-width:1400px;margin:0 auto}
            background:linear-gradient(90deg,var(--green),var(--gold))}
 .rank-pts{min-width:46px;text-align:right;font-size:.95em;font-weight:900;color:#fff}
 .rank-pts small{font-size:.62em;font-weight:600;color:var(--muted);margin-left:2px}
+
+/* ── Knockout bracket ─────────────────────────────────────────── */
+.prob-note{font-size:.75em;color:var(--muted);background:var(--bg3);border-left:3px solid var(--gold);
+           padding:8px 12px;border-radius:6px;margin-bottom:18px}
+.ko-stage{margin-bottom:26px}
+.ko-stage-title{font-size:.82em;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+                color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.ko-stage-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.ko-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.ko-match{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;transition:.15s}
+.ko-match:hover{border-color:rgba(0,168,107,.4)}
+.ko-side{display:flex;align-items:center;gap:9px;padding:5px 0}
+.ko-side img{width:26px;height:18px;border-radius:3px;object-fit:cover;flex-shrink:0}
+.ko-fb{width:26px;height:18px;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.55em;font-weight:800;color:#fff}
+.ko-name{flex:1;font-size:.86em;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ko-name.win{color:var(--green);font-weight:800}
+.ko-name.tbd{color:var(--muted);font-style:italic;font-weight:500}
+.ko-score{font-size:.95em;font-weight:900;color:#fff;min-width:20px;text-align:center}
+.ko-prob{font-size:.72em;font-weight:700;color:var(--muted);min-width:36px;text-align:right}
+.ko-prob.fav{color:var(--gold)}
+.ko-probbar{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;margin:6px 0 2px}
+.ko-probfill{height:100%;background:linear-gradient(90deg,var(--green),var(--gold));border-radius:2px}
+.ko-status{font-size:.66em;color:var(--muted);text-align:right;margin-top:4px;text-transform:uppercase;letter-spacing:.05em}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .verdict-section{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:28px}
 .verdict-block h2{font-size:1em;font-weight:900;margin-bottom:12px;display:flex;align-items:center;gap:8px}
@@ -221,6 +244,7 @@ main{padding:22px 18px 60px;max-width:1400px;margin:0 auto}
     <button class="active" onclick="showTab('scorers',this)">⚽ TOP SCORERS</button>
     <button onclick="showTab('teams',this)">🛡️ STANDINGS</button>
     <button onclick="showTab('goals',this)">📊 GOALS ANALYSIS</button>
+    <button onclick="showTab('bracket',this)">🏆 BRACKET</button>
   </nav>
 </header>
 
@@ -261,6 +285,14 @@ main{padding:22px 18px 60px;max-width:1400px;margin:0 auto}
     <h3>Goal Difference by team</h3>
     <div id="chart-gd" style="height:500px"></div>
   </div>
+</div>
+
+<!-- ═══════════════════════════════════════ BRACKET ═════════════ -->
+<div id="tab-bracket" class="tab">
+  <div class="section-label">Knockout Stage</div>
+  <div class="section-title">🏆 Bracket <span>Results &amp; estimated win probability</span></div>
+  <div id="bracket-note" class="prob-note">Win probabilities are an estimate from group-stage form (points + goal difference), not official odds.</div>
+  <div id="bracket-wrap"></div>
 </div>
 
 </main>
@@ -326,6 +358,7 @@ function renderAll(){
   renderScorers();
   renderTeams();
   renderGoals();
+  renderBracket();
 }
 
 function stampHeader(){
@@ -484,6 +517,64 @@ function renderGoals(){
     marker:{color:byGD.map(t=>t.GD), colorscale:SCALE, cmin:-6, cmid:0, cmax:6, showscale:false},
     hovertemplate:'<b>%{y}</b><br>GD: %{x}<extra></extra>'
   }],{...LB, xaxis:{title:'Goal Difference', gridcolor:GR, dtick:1, zeroline:true, zerolinecolor:'#444'}, yaxis:{gridcolor:GR}, height:500});
+}
+
+// ── KNOCKOUT BRACKET ──────────────────────────────────────────
+function renderBracket(){
+  const bracket = DATA.bracket || [];
+  const wrap = document.getElementById('bracket-wrap');
+  const note = document.getElementById('bracket-note');
+  if(!bracket.length){
+    note.style.display = 'none';
+    wrap.innerHTML = '<p style="color:var(--muted);font-size:.9em">The knockout stage hasn\'t started yet — the bracket will appear once Round of 16 fixtures are set.</p>';
+    return;
+  }
+  note.style.display = 'block';
+
+  const flagEl = (name)=>{
+    const f = FLAG(name);
+    return f
+      ? `<img src="${f}" alt="${name}" onerror="this.outerHTML='<div class=&quot;ko-fb&quot; style=&quot;background:${colorFor(name)}&quot;>${initials(name)}</div>'">`
+      : `<div class="ko-fb" style="background:${colorFor(name)}">${initials(name)}</div>`;
+  };
+
+  wrap.innerHTML = bracket.map(stage=>{
+    const matches = stage.matches.map(m=>{
+      const done = m.status === 'FINISHED';
+      const homeWin = m.winner === 'HOME_TEAM';
+      const awayWin = m.winner === 'AWAY_TEAM';
+      const isTBD = (n)=> n === 'TBD';
+      const hasProb = (m.home_prob != null);
+      // score or probability column
+      const homeRight = done ? `<span class="ko-score">${m.hg ?? ''}</span>`
+                  : hasProb ? `<span class="ko-prob ${m.home_prob>=m.away_prob?'fav':''}">${m.home_prob}%</span>` : '';
+      const awayRight = done ? `<span class="ko-score">${m.ag ?? ''}</span>`
+                  : hasProb ? `<span class="ko-prob ${m.away_prob>m.home_prob?'fav':''}">${m.away_prob}%</span>` : '';
+      const probBar = (!done && hasProb)
+        ? `<div class="ko-probbar"><div class="ko-probfill" style="width:${m.home_prob}%"></div></div>` : '';
+      const statusLine = done ? '' : `<div class="ko-status">${m.status==='SCHEDULED'?'Upcoming':m.status}</div>`;
+      return `
+      <div class="ko-match">
+        <div class="ko-side">
+          ${flagEl(m.home)}
+          <span class="ko-name ${homeWin?'win':''} ${isTBD(m.home)?'tbd':''}">${m.home}</span>
+          ${homeRight}
+        </div>
+        ${probBar}
+        <div class="ko-side">
+          ${flagEl(m.away)}
+          <span class="ko-name ${awayWin?'win':''} ${isTBD(m.away)?'tbd':''}">${m.away}</span>
+          ${awayRight}
+        </div>
+        ${statusLine}
+      </div>`;
+    }).join('');
+    return `
+    <div class="ko-stage">
+      <div class="ko-stage-title">${stage.label}</div>
+      <div class="ko-grid">${matches}</div>
+    </div>`;
+  }).join('');
 }
 
 // ── TAB NAV ───────────────────────────────────────────────────
