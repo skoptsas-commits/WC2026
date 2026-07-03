@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-03T17:02:54+00:00",
+  "updated_at": "2026-07-03T21:44:21+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -645,7 +645,7 @@
       "g": 6,
       "a": 0,
       "pen": 0,
-      "played": 3
+      "played": 4
     },
     {
       "player": "Erling Haaland",
@@ -882,18 +882,18 @@
       "played": 4
     },
     {
+      "player": "Emam Ashour",
+      "team": "Egypt",
+      "nation": "EGY",
+      "g": 2,
+      "a": 0,
+      "pen": 0,
+      "played": 4
+    },
+    {
       "player": "Maximiliano Araújo",
       "team": "Uruguay",
       "nation": "URU",
-      "g": 2,
-      "a": 1,
-      "pen": 0,
-      "played": 3
-    },
-    {
-      "player": "Ramin Rezaeian",
-      "team": "Iran",
-      "nation": "IRA",
       "g": 2,
       "a": 1,
       "pen": 0,
