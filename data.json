@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-04T15:46:18+00:00",
+  "updated_at": "2026-07-04T21:16:14+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -645,7 +645,7 @@
       "g": 6,
       "a": 2,
       "pen": 0,
-      "played": 4
+      "played": 5
     },
     {
       "player": "Erling Haaland",
@@ -690,7 +690,7 @@
       "g": 4,
       "a": 2,
       "pen": 0,
-      "played": 4
+      "played": 5
     },
     {
       "player": "Ismaïla Sarr",
@@ -726,7 +726,7 @@
       "g": 3,
       "a": 0,
       "pen": 0,
-      "played": 4
+      "played": 5
     },
     {
       "player": "Kai Havertz",
@@ -780,7 +780,7 @@
       "g": 3,
       "a": 0,
       "pen": 0,
-      "played": 4
+      "played": 5
     },
     {
       "player": "Matheus Cunha",
@@ -834,7 +834,7 @@
       "g": 2,
       "a": 0,
       "pen": 0,
-      "played": 4
+      "played": 5
     },
     {
       "player": "Breel Embolo",
@@ -907,23 +907,23 @@
       "matches": [
         {
           "stage": "LAST_16",
-          "status": "TIMED",
+          "status": "FINISHED",
           "home": "Canada",
           "away": "Morocco",
-          "hg": null,
-          "ag": null,
-          "winner": null,
+          "hg": 0,
+          "ag": 3,
+          "winner": "AWAY_TEAM",
           "home_prob": 32,
           "away_prob": 68
         },
         {
           "stage": "LAST_16",
-          "status": "TIMED",
+          "status": "LIVE",
           "home": "Paraguay",
           "away": "France",
-          "hg": null,
-          "ag": null,
-          "winner": null,
+          "hg": 0,
+          "ag": 0,
+          "winner": "DRAW",
           "home_prob": 6,
           "away_prob": 94
         },
