@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-03T21:44:21+00:00",
+  "updated_at": "2026-07-04T09:10:09+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -630,20 +630,20 @@
   ],
   "players": [
     {
+      "player": "Lionel Messi",
+      "team": "Argentina",
+      "nation": "ARG",
+      "g": 7,
+      "a": 1,
+      "pen": 0,
+      "played": 4
+    },
+    {
       "player": "Kylian Mbappé",
       "team": "France",
       "nation": "FRA",
       "g": 6,
       "a": 2,
-      "pen": 0,
-      "played": 4
-    },
-    {
-      "player": "Lionel Messi",
-      "team": "Argentina",
-      "nation": "ARG",
-      "g": 6,
-      "a": 0,
       "pen": 0,
       "played": 4
     },
@@ -952,11 +952,13 @@
         {
           "stage": "LAST_16",
           "status": "TIMED",
-          "home": "TBD",
-          "away": "TBD",
+          "home": "Portugal",
+          "away": "Spain",
           "hg": null,
           "ag": null,
-          "winner": null
+          "winner": null,
+          "home_prob": 34,
+          "away_prob": 66
         },
         {
           "stage": "LAST_16",
@@ -972,20 +974,24 @@
         {
           "stage": "LAST_16",
           "status": "TIMED",
-          "home": "TBD",
-          "away": "TBD",
+          "home": "Argentina",
+          "away": "Egypt",
           "hg": null,
           "ag": null,
-          "winner": null
+          "winner": null,
+          "home_prob": 87,
+          "away_prob": 13
         },
         {
           "stage": "LAST_16",
           "status": "TIMED",
-          "home": "TBD",
-          "away": "TBD",
+          "home": "Switzerland",
+          "away": "Colombia",
           "hg": null,
           "ag": null,
-          "winner": null
+          "winner": null,
+          "home_prob": 53,
+          "away_prob": 47
         }
       ]
     },
