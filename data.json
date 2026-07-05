@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-04T21:16:14+00:00",
+  "updated_at": "2026-07-05T09:47:31+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -630,6 +630,15 @@
   ],
   "players": [
     {
+      "player": "Kylian Mbappé",
+      "team": "France",
+      "nation": "FRA",
+      "g": 7,
+      "a": 2,
+      "pen": 1,
+      "played": 5
+    },
+    {
       "player": "Lionel Messi",
       "team": "Argentina",
       "nation": "ARG",
@@ -637,15 +646,6 @@
       "a": 0,
       "pen": 0,
       "played": 4
-    },
-    {
-      "player": "Kylian Mbappé",
-      "team": "France",
-      "nation": "FRA",
-      "g": 6,
-      "a": 2,
-      "pen": 0,
-      "played": 5
     },
     {
       "player": "Erling Haaland",
@@ -918,12 +918,12 @@
         },
         {
           "stage": "LAST_16",
-          "status": "LIVE",
+          "status": "FINISHED",
           "home": "Paraguay",
           "away": "France",
           "hg": 0,
-          "ag": 0,
-          "winner": "DRAW",
+          "ag": 1,
+          "winner": "AWAY_TEAM",
           "home_prob": 6,
           "away_prob": 94
         },
@@ -1002,11 +1002,13 @@
         {
           "stage": "QUARTER_FINALS",
           "status": "TIMED",
-          "home": "TBD",
-          "away": "TBD",
+          "home": "France",
+          "away": "Morocco",
           "hg": null,
           "ag": null,
-          "winner": null
+          "winner": null,
+          "home_prob": 78,
+          "away_prob": 22
         },
         {
           "stage": "QUARTER_FINALS",
