@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-05T21:37:41+00:00",
+  "updated_at": "2026-07-06T08:06:03+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -639,6 +639,15 @@
       "played": 5
     },
     {
+      "player": "Erling Haaland",
+      "team": "Norway",
+      "nation": "NOR",
+      "g": 7,
+      "a": 0,
+      "pen": 0,
+      "played": 5
+    },
+    {
       "player": "Lionel Messi",
       "team": "Argentina",
       "nation": "ARG",
@@ -648,27 +657,36 @@
       "played": 4
     },
     {
-      "player": "Erling Haaland",
-      "team": "Norway",
-      "nation": "NOR",
-      "g": 5,
-      "a": 0,
-      "pen": 0,
-      "played": 5
-    },
-    {
       "player": "Harry Kane",
       "team": "England",
       "nation": "ENG",
-      "g": 5,
-      "a": 0,
-      "pen": 1,
-      "played": 4
+      "g": 6,
+      "a": 1,
+      "pen": 2,
+      "played": 5
+    },
+    {
+      "player": "Julián Quiñones",
+      "team": "Mexico",
+      "nation": "COL",
+      "g": 4,
+      "a": 1,
+      "pen": 0,
+      "played": 5
     },
     {
       "player": "Vinicius Junior",
       "team": "Brazil",
       "nation": "BRA",
+      "g": 4,
+      "a": 1,
+      "pen": 0,
+      "played": 5
+    },
+    {
+      "player": "Jude Bellingham",
+      "team": "England",
+      "nation": "ENG",
       "g": 4,
       "a": 1,
       "pen": 0,
@@ -702,13 +720,13 @@
       "played": 4
     },
     {
-      "player": "Julián Quiñones",
+      "player": "Raúl Jiménez",
       "team": "Mexico",
-      "nation": "COL",
+      "nation": "MEX",
       "g": 3,
-      "a": 1,
-      "pen": 0,
-      "played": 4
+      "a": 0,
+      "pen": 1,
+      "played": 5
     },
     {
       "player": "Folarin Balogun",
@@ -819,15 +837,6 @@
       "played": 4
     },
     {
-      "player": "Raúl Jiménez",
-      "team": "Mexico",
-      "nation": "MEX",
-      "g": 2,
-      "a": 0,
-      "pen": 0,
-      "played": 4
-    },
-    {
       "player": "Cyle Larin",
       "team": "Canada",
       "nation": "CAN",
@@ -889,15 +898,6 @@
       "a": 0,
       "pen": 0,
       "played": 4
-    },
-    {
-      "player": "Maximiliano Araújo",
-      "team": "Uruguay",
-      "nation": "URU",
-      "g": 2,
-      "a": 1,
-      "pen": 0,
-      "played": 3
     }
   ],
   "bracket": [
@@ -929,23 +929,23 @@
         },
         {
           "stage": "LAST_16",
-          "status": "LIVE",
+          "status": "FINISHED",
           "home": "Brazil",
           "away": "Norway",
-          "hg": 0,
-          "ag": 0,
-          "winner": "DRAW",
+          "hg": 1,
+          "ag": 2,
+          "winner": "AWAY_TEAM",
           "home_prob": 71,
           "away_prob": 29
         },
         {
           "stage": "LAST_16",
-          "status": "TIMED",
+          "status": "FINISHED",
           "home": "Mexico",
           "away": "England",
-          "hg": null,
-          "ag": null,
-          "winner": null,
+          "hg": 2,
+          "ag": 3,
+          "winner": "AWAY_TEAM",
           "home_prob": 71,
           "away_prob": 29
         },
@@ -1022,11 +1022,13 @@
         {
           "stage": "QUARTER_FINALS",
           "status": "TIMED",
-          "home": "TBD",
-          "away": "TBD",
+          "home": "Norway",
+          "away": "England",
           "hg": null,
           "ag": null,
-          "winner": null
+          "winner": null,
+          "home_prob": 34,
+          "away_prob": 66
         },
         {
           "stage": "QUARTER_FINALS",
