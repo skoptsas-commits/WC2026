@@ -115,12 +115,47 @@ def _win_prob(a, b, strength):
     sb = strength.get(b, 1.0)
     return round(1 / (1 + math.exp(-(sa - sb))) * 100)
 
-def get_bracket(teams):
-    """Knockout matches ανά stage, με εκτιμώμενες πιθανότητες νίκης."""
+def get_matches_raw():
+    """Τραβάει ΟΛΟΥΣ τους αγώνες μία φορά — μοιράζεται σε bracket + matches list."""
     try:
-        data = api_get(f"/competitions/{COMPETITION}/matches")
+        return api_get(f"/competitions/{COMPETITION}/matches")
     except Exception as e:
-        print(f"ℹ️  Δεν τράβηξα knockout matches: {e}")
+        print(f"ℹ️  Δεν τράβηξα matches: {e}")
+        return {}
+
+
+def build_matches(data):
+    """Όλοι οι αγώνες (όμιλοι + νοκ-άουτ) σε ελαφρύ schema για τα νέα tabs.
+
+    Χρησιμοποιεί shortName ώστε τα ονόματα να ταιριάζουν 1:1 με τα
+    teams / players / bracket (name-based matching στο frontend)."""
+    matches = []
+    for m in data.get("matches", []):
+        home = m.get("homeTeam", {}) or {}
+        away = m.get("awayTeam", {}) or {}
+        score = m.get("score", {}) or {}
+        full = score.get("fullTime", {}) or {}
+        matches.append({
+            "date":     m.get("utcDate"),
+            "status":   m.get("status", ""),
+            "matchday": m.get("matchday"),
+            "stage":    m.get("stage"),
+            "group":    (m.get("group") or "").replace("GROUP_", "Group "),
+            "home":     home.get("shortName") or home.get("name") or "TBD",
+            "away":     away.get("shortName") or away.get("name") or "TBD",
+            "hg":       full.get("home"),
+            "ag":       full.get("away"),
+            "winner":   score.get("winner"),
+        })
+    matches.sort(key=lambda x: x["date"] or "")
+    return matches
+
+
+def get_bracket(teams, data=None):
+    """Knockout matches ανά stage, με εκτιμώμενες πιθανότητες νίκης."""
+    if data is None:
+        data = get_matches_raw()
+    if not data:
         return []
 
     strength = _team_strength(teams)
@@ -168,7 +203,10 @@ def main():
     print(f"   ομάδες: {len(teams)}")
     players = get_players()
     print(f"   scorers: {len(players)}")
-    bracket = get_bracket(teams)
+    matches_raw = get_matches_raw()
+    matches = build_matches(matches_raw)
+    print(f"   αγώνες: {len(matches)}")
+    bracket = get_bracket(teams, matches_raw)
     print(f"   knockout stages: {len(bracket)}")
 
     if not teams and not players:
@@ -181,6 +219,7 @@ def main():
         "competition": COMPETITION,
         "teams": teams,
         "players": players,
+        "matches": matches,
         "bracket": bracket,
     }
 

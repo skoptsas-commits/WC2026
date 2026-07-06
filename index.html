@@ -208,6 +208,42 @@ main{padding:22px 18px 60px;max-width:1400px;margin:0 auto}
 .avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;
         justify-content:center;font-size:1.2em;font-weight:900;color:#fff;flex-shrink:0;border:2px solid}
 
+/* ── Explorer tabs (Teams drill-down / Matches / H2H) ─────────── */
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.controls select{background:var(--bg3);color:var(--text);border:1px solid var(--border);
+  border-radius:8px;padding:10px 14px;font-size:.9em;font-family:inherit;cursor:pointer;min-width:190px}
+.controls select:focus{outline:none;border-color:var(--gold)}
+.mrow{display:flex;align-items:center;gap:12px;padding:11px 14px;background:var(--card);
+  border:1px solid var(--border);border-radius:10px;margin-bottom:8px;font-size:.9em}
+.mrow .side{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
+.mrow .side.away{flex-direction:row-reverse}
+.mrow .side img{width:24px;height:17px;border-radius:2px;object-fit:cover;flex-shrink:0}
+.mrow .side .nm{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mrow .sc{font-weight:900;font-size:1.1em;background:var(--bg3);padding:4px 12px;
+  border-radius:6px;min-width:62px;text-align:center;flex-shrink:0}
+.mrow .sc.pending{color:var(--muted);font-size:.78em;font-weight:600}
+.mrow .meta{font-size:.66em;color:var(--muted);min-width:88px;text-align:right;flex-shrink:0}
+.mrow.win-h .side.home .nm{color:var(--gold)}
+.mrow.win-a .side.away .nm{color:var(--gold)}
+.mrow .stagechip{font-size:.6em;font-weight:800;color:var(--muted);background:var(--bg3);
+  padding:2px 7px;border-radius:20px;flex-shrink:0;letter-spacing:.04em}
+.form-row{display:inline-flex;gap:3px;vertical-align:middle}
+.fp{width:18px;height:18px;border-radius:4px;font-size:.6em;font-weight:800;
+  display:inline-flex;align-items:center;justify-content:center;color:#fff}
+.fW{background:var(--green)}.fD{background:#8a6d00}.fL{background:#c22040}
+.h2h-hero{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;margin-bottom:14px}
+.h2h-hero .col{text-align:center}
+.h2h-hero .col img{width:56px;height:38px;border-radius:4px;object-fit:cover;margin-bottom:8px}
+.h2h-hero .col .nm{font-weight:800;font-size:1.05em}
+.h2h-hero .vs{font-size:1.3em;font-weight:900;color:var(--muted)}
+.h2h-metric{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;
+  padding:9px 0;border-bottom:1px solid rgba(42,42,61,.45)}
+.h2h-metric .v{font-size:1.1em;font-weight:800}
+.h2h-metric .v.l{text-align:right}.h2h-metric .v.r{text-align:left}
+.h2h-metric .lbl{font-size:.68em;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;text-align:center}
+.h2h-metric .better{color:var(--gold)}
+.empty-note{text-align:center;color:var(--muted);padding:40px 16px;font-size:.9em}
+
 @media(max-width:760px){.grid2,.verdict-section{grid-template-columns:1fr}
   .stat-row{grid-template-columns:1fr 1fr}}
 @media(max-width:480px){.player-grid{grid-template-columns:1fr 1fr}}
@@ -245,6 +281,9 @@ main{padding:22px 18px 60px;max-width:1400px;margin:0 auto}
     <button onclick="showTab('teams',this)">🛡️ STANDINGS</button>
     <button onclick="showTab('goals',this)">📊 GOALS ANALYSIS</button>
     <button onclick="showTab('bracket',this)">🏆 BRACKET</button>
+    <button onclick="showTab('explorer',this)">🔎 TEAM EXPLORER</button>
+    <button onclick="showTab('matches',this)">📅 MATCHES</button>
+    <button onclick="showTab('h2h',this)">⚔️ HEAD-TO-HEAD</button>
   </nav>
 </header>
 
@@ -293,6 +332,42 @@ main{padding:22px 18px 60px;max-width:1400px;margin:0 auto}
   <div class="section-title">🏆 Bracket <span>Results &amp; estimated win probability</span></div>
   <div id="bracket-note" class="prob-note">Win probabilities are an estimate from group-stage form (points + goal difference), not official odds.</div>
   <div id="bracket-wrap"></div>
+</div>
+
+<!-- ═══════════════════════════════════ TEAM EXPLORER ═══════════ -->
+<div id="tab-explorer" class="tab">
+  <div class="section-label">Deep Dive</div>
+  <div class="section-title">🔎 Team Explorer <span>Every match, stat &amp; scorer for one team</span></div>
+  <div class="controls">
+    <select id="explorer-select"><option value="">— Select a team —</option></select>
+  </div>
+  <div id="explorer-detail"><div class="empty-note">Pick a team above to see everything about it.</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════ MATCHES ═════════════ -->
+<div id="tab-matches" class="tab">
+  <div class="section-label">Full Schedule</div>
+  <div class="section-title">📅 Matches <span>All results &amp; upcoming fixtures</span></div>
+  <div class="controls">
+    <select id="mstatus-filter">
+      <option value="all">All matches</option>
+      <option value="finished">Finished</option>
+      <option value="upcoming">Upcoming / Live</option>
+    </select>
+    <select id="mstage-filter"><option value="all">All stages</option></select>
+  </div>
+  <div id="match-list"></div>
+</div>
+
+<!-- ═══════════════════════════════════ HEAD-TO-HEAD ════════════ -->
+<div id="tab-h2h" class="tab">
+  <div class="section-label">Comparison</div>
+  <div class="section-title">⚔️ Head-to-Head <span>Two teams, side by side</span></div>
+  <div class="controls">
+    <select id="h2h-a"><option value="">— Team A —</option></select>
+    <select id="h2h-b"><option value="">— Team B —</option></select>
+  </div>
+  <div id="h2h-detail"><div class="empty-note">Pick two teams to compare.</div></div>
 </div>
 
 </main>
@@ -353,12 +428,12 @@ async function boot(){
 }
 
 function renderAll(){
-  stampHeader();
-  renderTicker();
-  renderScorers();
-  renderTeams();
-  renderGoals();
-  renderBracket();
+  // Κάθε renderer τρέχει απομονωμένος: αν ένας αποτύχει (π.χ. Plotly CDN
+  // απρόσιτο), οι υπόλοιποι συνεχίζουν κανονικά.
+  [stampHeader, renderTicker, renderScorers, renderTeams,
+   renderGoals, renderBracket, initExplorer].forEach(fn => {
+    try { fn(); } catch(e){ console.error(fn.name + ' failed:', e); }
+  });
 }
 
 function stampHeader(){
@@ -575,6 +650,193 @@ function renderBracket(){
       <div class="ko-grid">${matches}</div>
     </div>`;
   }).join('');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  EXPLORER TABS — Team drill-down · Matches · Head-to-Head
+//  (διαβάζουν DATA.matches που προστέθηκε στο fetch_data.py·
+//   name-based matching με shortName, όπως teams/players/bracket)
+// ══════════════════════════════════════════════════════════════
+const STAGE_LABEL = {GROUP_STAGE:'Groups', LAST_32:'Round of 32', LAST_16:'Round of 16',
+  QUARTER_FINALS:'Quarter-finals', SEMI_FINALS:'Semi-finals',
+  THIRD_PLACE:'Third place', FINAL:'Final'};
+
+const hasMatches = () => Array.isArray(DATA.matches) && DATA.matches.length > 0;
+
+function fmtD(iso){
+  if(!iso) return '';
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'}) + ' ' +
+         d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+}
+
+function flagImg(name, cls){
+  const f = FLAG(name);
+  return f ? `<img class="${cls||''}" src="${f}" alt="">` : '';
+}
+
+function teamRowByName(name){
+  return (DATA.teams||[]).find(t => t.team === name) || null;
+}
+
+function matchesOf(name){
+  return (DATA.matches||[]).filter(m => m.home === name || m.away === name);
+}
+
+function mrowHtml(m, showStage){
+  const fin = m.status === 'FINISHED';
+  const live = m.status === 'IN_PLAY' || m.status === 'PAUSED';
+  const winCls = fin ? (m.winner === 'HOME_TEAM' ? 'win-h' : m.winner === 'AWAY_TEAM' ? 'win-a' : '') : '';
+  const sc = fin ? `${m.hg} – ${m.ag}` : live ? 'LIVE' : 'vs';
+  const chip = showStage ? `<span class="stagechip">${m.group || STAGE_LABEL[m.stage] || ''}</span>` : '';
+  return `<div class="mrow ${winCls}">
+    <div class="side home">${flagImg(m.home)}<span class="nm">${m.home}</span></div>
+    <div class="sc ${fin?'':'pending'}">${sc}</div>
+    <div class="side away">${flagImg(m.away)}<span class="nm">${m.away}</span></div>
+    ${chip}<div class="meta">${fmtD(m.date)}</div>
+  </div>`;
+}
+
+function formHtmlFrom(name){
+  const fin = matchesOf(name).filter(m => m.status === 'FINISHED');
+  const last = fin.slice(-5);
+  if(!last.length) return '';
+  return '<span class="form-row">' + last.map(m => {
+    const my = m.home === name ? m.hg : m.ag;
+    const opp = m.home === name ? m.ag : m.hg;
+    const r = my > opp ? 'W' : my < opp ? 'L' : 'D';
+    return `<span class="fp f${r}">${r}</span>`;
+  }).join('') + '</span>';
+}
+
+// ── Team Explorer ─────────────────────────────────────────────
+function initExplorer(){
+  const names = (DATA.teams||[]).map(t=>t.team).sort();
+  const opts = names.map(n=>`<option value="${n}">${n}</option>`).join('');
+  const selE = document.getElementById('explorer-select');
+  const selA = document.getElementById('h2h-a');
+  const selB = document.getElementById('h2h-b');
+  selE.innerHTML = '<option value="">— Select a team —</option>' + opts;
+  selA.innerHTML = '<option value="">— Team A —</option>' + opts;
+  selB.innerHTML = '<option value="">— Team B —</option>' + opts;
+  selE.onchange = e => renderExplorer(e.target.value);
+  selA.onchange = renderH2H;
+  selB.onchange = renderH2H;
+
+  // Matches filters
+  const stageSel = document.getElementById('mstage-filter');
+  const stages = [...new Set((DATA.matches||[]).map(m=>m.stage).filter(Boolean))];
+  stageSel.innerHTML = '<option value="all">All stages</option>' +
+    stages.map(s=>`<option value="${s}">${STAGE_LABEL[s]||s}</option>`).join('');
+  stageSel.onchange = renderMatchList;
+  document.getElementById('mstatus-filter').onchange = renderMatchList;
+  renderMatchList();
+}
+
+function renderExplorer(name){
+  const box = document.getElementById('explorer-detail');
+  if(!name){ box.innerHTML = '<div class="empty-note">Pick a team above to see everything about it.</div>'; return; }
+  const t = teamRowByName(name);
+  const ms = matchesOf(name);
+  const fin = ms.filter(m=>m.status==='FINISHED');
+  const clean = fin.filter(m => (m.home===name ? m.ag : m.hg) === 0).length;
+  const color = colorFor(name);
+
+  const stats = t ? `
+    <div class="stat-row" style="grid-template-columns:repeat(6,1fr)">
+      <div class="stat-card"><div class="num">${t.points}</div><div class="lbl">Points</div><div class="sub">${t.group||''}</div></div>
+      <div class="stat-card"><div class="num">${t.W}-${t.D}-${t.L}</div><div class="lbl">W-D-L</div></div>
+      <div class="stat-card"><div class="num">${t.GF}</div><div class="lbl">Goals for</div></div>
+      <div class="stat-card"><div class="num">${t.GA}</div><div class="lbl">Goals against</div></div>
+      <div class="stat-card"><div class="num">${t.GD>=0?'+':''}${t.GD}</div><div class="lbl">Goal diff</div></div>
+      <div class="stat-card"><div class="num">${clean}</div><div class="lbl">Clean sheets</div></div>
+    </div>` : '<div class="empty-note">No standings entry for this team yet.</div>';
+
+  const scorers = (DATA.players||[]).filter(p => p.team === name);
+  const scorerHtml = scorers.length ? `
+    <div class="chart-card"><h3>Scorers <small>tournament totals</small></h3>
+      ${scorers.map(p=>`<div class="mrow" style="justify-content:space-between">
+        <span class="nm" style="font-weight:600">${p.player}</span>
+        <span>⚽ <b style="color:var(--gold)">${p.g}</b> &nbsp; 🅰️ ${p.a} &nbsp; <span style="color:var(--muted);font-size:.8em">${p.played} apps</span></span>
+      </div>`).join('')}
+    </div>` : '';
+
+  const matchesHtml = ms.length
+    ? ms.map(m=>mrowHtml(m,true)).join('')
+    : '<div class="empty-note">No matches found for this team.</div>';
+
+  box.innerHTML = `
+    <div class="chart-card" style="border-left:4px solid ${color}">
+      <h3 style="display:flex;align-items:center;gap:10px;font-size:1.15em">
+        ${flagImg(name)} ${name} ${formHtmlFrom(name)}
+      </h3>
+    </div>
+    ${stats}
+    <div class="chart-card"><h3>All matches <small>group stage &amp; knockouts</small></h3>${matchesHtml}</div>
+    ${scorerHtml}`;
+}
+
+// ── Matches list ──────────────────────────────────────────────
+function renderMatchList(){
+  const box = document.getElementById('match-list');
+  if(!hasMatches()){
+    box.innerHTML = '<div class="empty-note">Match list will appear after the next data refresh (needs the updated fetch_data.py).</div>';
+    return;
+  }
+  const status = document.getElementById('mstatus-filter').value;
+  const stage = document.getElementById('mstage-filter').value;
+  let ms = DATA.matches.slice();
+  if(status==='finished') ms = ms.filter(m=>m.status==='FINISHED');
+  else if(status==='upcoming') ms = ms.filter(m=>m.status!=='FINISHED');
+  if(stage!=='all') ms = ms.filter(m=>m.stage===stage);
+  box.innerHTML = ms.map(m=>mrowHtml(m,true)).join('') ||
+    '<div class="empty-note">No matches for these filters.</div>';
+}
+
+// ── Head-to-Head ──────────────────────────────────────────────
+function renderH2H(){
+  const a = document.getElementById('h2h-a').value;
+  const b = document.getElementById('h2h-b').value;
+  const box = document.getElementById('h2h-detail');
+  if(!a || !b){ box.innerHTML = '<div class="empty-note">Pick two teams to compare.</div>'; return; }
+  if(a===b){ box.innerHTML = '<div class="empty-note">Pick two different teams.</div>'; return; }
+  const ta = teamRowByName(a), tb = teamRowByName(b);
+  const cleanOf = n => matchesOf(n).filter(m=>m.status==='FINISHED' && (m.home===n?m.ag:m.hg)===0).length;
+
+  const metric = (label, va, vb, higher=true) => {
+    const na = va==null?-Infinity:va, nb = vb==null?-Infinity:vb;
+    const aB = higher ? na>nb : na<nb, bB = higher ? nb>na : nb<na;
+    return `<div class="h2h-metric">
+      <div class="v l ${aB?'better':''}">${va??'—'}</div>
+      <div class="lbl">${label}</div>
+      <div class="v r ${bB?'better':''}">${vb??'—'}</div></div>`;
+  };
+
+  // Άμεσες αναμετρήσεις μεταξύ τους στο τουρνουά (αν υπάρχουν)
+  const direct = (DATA.matches||[]).filter(m =>
+    (m.home===a && m.away===b) || (m.home===b && m.away===a));
+  const directHtml = direct.length
+    ? `<div class="chart-card"><h3>Meetings in this tournament</h3>${direct.map(m=>mrowHtml(m,true)).join('')}</div>`
+    : '';
+
+  box.innerHTML = `
+    <div class="chart-card">
+      <div class="h2h-hero">
+        <div class="col">${flagImg(a)}<div class="nm">${a}</div><div>${formHtmlFrom(a)}</div></div>
+        <div class="vs">VS</div>
+        <div class="col">${flagImg(b)}<div class="nm">${b}</div><div>${formHtmlFrom(b)}</div></div>
+      </div>
+      ${metric('Points', ta?.points, tb?.points)}
+      ${metric('Wins', ta?.W, tb?.W)}
+      ${metric('Draws', ta?.D, tb?.D)}
+      ${metric('Losses', ta?.L, tb?.L, false)}
+      ${metric('Goals for', ta?.GF, tb?.GF)}
+      ${metric('Goals against', ta?.GA, tb?.GA, false)}
+      ${metric('Goal difference', ta?.GD, tb?.GD)}
+      ${metric('Clean sheets', cleanOf(a), cleanOf(b))}
+      ${metric('Win %', ta?.win_pct, tb?.win_pct)}
+    </div>
+    ${directHtml}`;
 }
 
 // ── TAB NAV ───────────────────────────────────────────────────
