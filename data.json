@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-06T14:07:11+00:00",
+  "updated_at": "2026-07-06T22:44:38+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -699,7 +699,7 @@
       "g": 4,
       "a": 1,
       "pen": 0,
-      "played": 4
+      "played": 5
     },
     {
       "player": "Ousmane Dembélé",
@@ -834,7 +834,7 @@
       "g": 3,
       "a": 0,
       "pen": 1,
-      "played": 4
+      "played": 5
     },
     {
       "player": "Cyle Larin",
@@ -2007,15 +2007,15 @@
     },
     {
       "date": "2026-07-06T19:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "LAST_16",
       "group": "",
       "home": "Portugal",
       "away": "Spain",
-      "hg": null,
-      "ag": null,
-      "winner": null
+      "hg": 0,
+      "ag": 1,
+      "winner": "AWAY_TEAM"
     },
     {
       "date": "2026-07-07T00:00:00Z",
@@ -2201,12 +2201,12 @@
         },
         {
           "stage": "LAST_16",
-          "status": "TIMED",
+          "status": "FINISHED",
           "home": "Portugal",
           "away": "Spain",
-          "hg": null,
-          "ag": null,
-          "winner": null,
+          "hg": 0,
+          "ag": 1,
+          "winner": "AWAY_TEAM",
           "home_prob": 34,
           "away_prob": 66
         },
