@@ -227,6 +227,17 @@ main{padding:22px 18px 60px;max-width:1400px;margin:0 auto}
 .mrow.win-a .side.away .nm{color:var(--gold)}
 .mrow .stagechip{font-size:.6em;font-weight:800;color:var(--muted);background:var(--bg3);
   padding:2px 7px;border-radius:20px;flex-shrink:0;letter-spacing:.04em}
+.mwrap{margin-bottom:8px}
+.mwrap .mrow{margin-bottom:0;cursor:pointer}
+.mwrap .mrow:hover{border-color:rgba(212,175,55,.45)}
+.mdetail{display:none;background:var(--bg3);border:1px solid var(--border);border-top:none;
+  border-radius:0 0 10px 10px;padding:10px 16px;font-size:.78em;color:var(--muted)}
+.mwrap.open .mdetail{display:flex;gap:22px;flex-wrap:wrap}
+.mwrap.open .mrow{border-radius:10px 10px 0 0}
+.mdetail b{color:var(--text)}
+.date-head{font-size:.7em;font-weight:800;color:var(--gold);text-transform:uppercase;
+  letter-spacing:.08em;margin:18px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.date-head:first-child{margin-top:0}
 .form-row{display:inline-flex;gap:3px;vertical-align:middle}
 .fp{width:18px;height:18px;border-radius:4px;font-size:.6em;font-weight:800;
   display:inline-flex;align-items:center;justify-content:center;color:#fff}
@@ -689,11 +700,21 @@ function mrowHtml(m, showStage){
   const winCls = fin ? (m.winner === 'HOME_TEAM' ? 'win-h' : m.winner === 'AWAY_TEAM' ? 'win-a' : '') : '';
   const sc = fin ? `${m.hg} – ${m.ag}` : live ? 'LIVE' : 'vs';
   const chip = showStage ? `<span class="stagechip">${m.group || STAGE_LABEL[m.stage] || ''}</span>` : '';
-  return `<div class="mrow ${winCls}">
+  const row = `<div class="mrow ${winCls}">
     <div class="side home">${flagImg(m.home)}<span class="nm">${m.home}</span></div>
     <div class="sc ${fin?'':'pending'}">${sc}</div>
     <div class="side away">${flagImg(m.away)}<span class="nm">${m.away}</span></div>
     ${chip}<div class="meta">${fmtD(m.date)}</div>
+  </div>`;
+  // Λεπτομέρειες (μόνο ό,τι υπάρχει στο free tier — ημίχρονο, γήπεδο, θεατές, διαιτητής)
+  const bits = [];
+  if(m.ht_hg != null && m.ht_ag != null) bits.push(`Ημίχρονο: <b>${m.ht_hg} – ${m.ht_ag}</b>`);
+  if(m.venue)      bits.push(`🏟️ <b>${m.venue}</b>`);
+  if(m.attendance) bits.push(`👥 <b>${Number(m.attendance).toLocaleString('en-US')}</b>`);
+  if(m.referee)    bits.push(`🟨 Διαιτητής: <b>${m.referee}</b>`);
+  if(!bits.length) return `<div class="mwrap">${row}</div>`;
+  return `<div class="mwrap" onclick="this.classList.toggle('open')">
+    ${row}<div class="mdetail">${bits.map(b=>`<span>${b}</span>`).join('')}</div>
   </div>`;
 }
 
@@ -789,8 +810,17 @@ function renderMatchList(){
   if(status==='finished') ms = ms.filter(m=>m.status==='FINISHED');
   else if(status==='upcoming') ms = ms.filter(m=>m.status!=='FINISHED');
   if(stage!=='all') ms = ms.filter(m=>m.stage===stage);
-  box.innerHTML = ms.map(m=>mrowHtml(m,true)).join('') ||
-    '<div class="empty-note">No matches for these filters.</div>';
+  if(!ms.length){ box.innerHTML = '<div class="empty-note">No matches for these filters.</div>'; return; }
+
+  // Ομαδοποίηση ανά ημέρα με headers
+  let html = '', lastDay = '';
+  for(const m of ms){
+    const day = m.date ? new Date(m.date).toLocaleDateString('en-GB',
+      {weekday:'long', day:'2-digit', month:'long'}) : 'TBD';
+    if(day !== lastDay){ html += `<div class="date-head">${day}</div>`; lastDay = day; }
+    html += mrowHtml(m, true);
+  }
+  box.innerHTML = html;
 }
 
 // ── Head-to-Head ──────────────────────────────────────────────
