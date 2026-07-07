@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-06T22:44:38+00:00",
+  "updated_at": "2026-07-07T11:22:16+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -735,7 +735,7 @@
       "g": 3,
       "a": 0,
       "pen": 0,
-      "played": 4
+      "played": 5
     },
     {
       "player": "Ismael Saibari",
@@ -837,6 +837,15 @@
       "played": 5
     },
     {
+      "player": "Romelu Lukaku",
+      "team": "Belgium",
+      "nation": "BEL",
+      "g": 3,
+      "a": 1,
+      "pen": 0,
+      "played": 5
+    },
+    {
       "player": "Cyle Larin",
       "team": "Canada",
       "nation": "CAN",
@@ -885,15 +894,6 @@
       "player": "Yasin Ayari",
       "team": "Sweden",
       "nation": "SWE",
-      "g": 2,
-      "a": 0,
-      "pen": 0,
-      "played": 4
-    },
-    {
-      "player": "Emam Ashour",
-      "team": "Egypt",
-      "nation": "EGY",
       "g": 2,
       "a": 0,
       "pen": 0,
@@ -2019,15 +2019,15 @@
     },
     {
       "date": "2026-07-07T00:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "LAST_16",
       "group": "",
       "home": "USA",
       "away": "Belgium",
-      "hg": null,
-      "ag": null,
-      "winner": null
+      "hg": 1,
+      "ag": 4,
+      "winner": "AWAY_TEAM"
     },
     {
       "date": "2026-07-07T16:00:00Z",
@@ -2071,8 +2071,8 @@
       "matchday": null,
       "stage": "QUARTER_FINALS",
       "group": "",
-      "home": "TBD",
-      "away": "TBD",
+      "home": "Spain",
+      "away": "Belgium",
       "hg": null,
       "ag": null,
       "winner": null
@@ -2212,12 +2212,12 @@
         },
         {
           "stage": "LAST_16",
-          "status": "TIMED",
+          "status": "FINISHED",
           "home": "USA",
           "away": "Belgium",
-          "hg": null,
-          "ag": null,
-          "winner": null,
+          "hg": 1,
+          "ag": 4,
+          "winner": "AWAY_TEAM",
           "home_prob": 58,
           "away_prob": 42
         },
@@ -2263,11 +2263,13 @@
         {
           "stage": "QUARTER_FINALS",
           "status": "TIMED",
-          "home": "TBD",
-          "away": "TBD",
+          "home": "Spain",
+          "away": "Belgium",
           "hg": null,
           "ag": null,
-          "winner": null
+          "winner": null,
+          "home_prob": 69,
+          "away_prob": 31
         },
         {
           "stage": "QUARTER_FINALS",
