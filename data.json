@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-07T15:24:40+00:00",
+  "updated_at": "2026-07-07T19:17:08+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -630,6 +630,15 @@
   ],
   "players": [
     {
+      "player": "Lionel Messi",
+      "team": "Argentina",
+      "nation": "ARG",
+      "g": 8,
+      "a": 1,
+      "pen": 0,
+      "played": 5
+    },
+    {
       "player": "Kylian Mbappé",
       "team": "France",
       "nation": "FRA",
@@ -642,15 +651,6 @@
       "player": "Erling Haaland",
       "team": "Norway",
       "nation": "NOR",
-      "g": 7,
-      "a": 0,
-      "pen": 0,
-      "played": 5
-    },
-    {
-      "player": "Lionel Messi",
-      "team": "Argentina",
-      "nation": "ARG",
       "g": 7,
       "a": 0,
       "pen": 0,
@@ -861,7 +861,7 @@
       "g": 2,
       "a": 2,
       "pen": 1,
-      "played": 4
+      "played": 5
     },
     {
       "player": "Crysencio Summerville",
@@ -2031,15 +2031,15 @@
     },
     {
       "date": "2026-07-07T16:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "LAST_16",
       "group": "",
       "home": "Argentina",
       "away": "Egypt",
-      "hg": null,
-      "ag": null,
-      "winner": null
+      "hg": 3,
+      "ag": 2,
+      "winner": "HOME_TEAM"
     },
     {
       "date": "2026-07-07T20:00:00Z",
@@ -2223,12 +2223,12 @@
         },
         {
           "stage": "LAST_16",
-          "status": "TIMED",
+          "status": "FINISHED",
           "home": "Argentina",
           "away": "Egypt",
-          "hg": null,
-          "ag": null,
-          "winner": null,
+          "hg": 3,
+          "ag": 2,
+          "winner": "HOME_TEAM",
           "home_prob": 87,
           "away_prob": 13
         },
