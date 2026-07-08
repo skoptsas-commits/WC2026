@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-07T19:17:08+00:00",
+  "updated_at": "2026-07-08T09:16:12+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -2043,15 +2043,15 @@
     },
     {
       "date": "2026-07-07T20:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "LAST_16",
       "group": "",
       "home": "Switzerland",
       "away": "Colombia",
-      "hg": null,
-      "ag": null,
-      "winner": null
+      "hg": 4,
+      "ag": 3,
+      "winner": "HOME_TEAM"
     },
     {
       "date": "2026-07-09T20:00:00Z",
@@ -2095,8 +2095,8 @@
       "matchday": null,
       "stage": "QUARTER_FINALS",
       "group": "",
-      "home": "TBD",
-      "away": "TBD",
+      "home": "Argentina",
+      "away": "Switzerland",
       "hg": null,
       "ag": null,
       "winner": null
@@ -2234,12 +2234,12 @@
         },
         {
           "stage": "LAST_16",
-          "status": "TIMED",
+          "status": "FINISHED",
           "home": "Switzerland",
           "away": "Colombia",
-          "hg": null,
-          "ag": null,
-          "winner": null,
+          "hg": 4,
+          "ag": 3,
+          "winner": "HOME_TEAM",
           "home_prob": 53,
           "away_prob": 47
         }
@@ -2285,11 +2285,13 @@
         {
           "stage": "QUARTER_FINALS",
           "status": "TIMED",
-          "home": "TBD",
-          "away": "TBD",
+          "home": "Argentina",
+          "away": "Switzerland",
           "hg": null,
           "ag": null,
-          "winner": null
+          "winner": null,
+          "home_prob": 73,
+          "away_prob": 27
         }
       ]
     },
