@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-09T18:26:58+00:00",
+  "updated_at": "2026-07-10T11:23:00+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -630,21 +630,21 @@
   ],
   "players": [
     {
+      "player": "Kylian Mbappé",
+      "team": "France",
+      "nation": "FRA",
+      "g": 8,
+      "a": 2,
+      "pen": 1,
+      "played": 6
+    },
+    {
       "player": "Lionel Messi",
       "team": "Argentina",
       "nation": "ARG",
       "g": 8,
       "a": 1,
       "pen": 0,
-      "played": 5
-    },
-    {
-      "player": "Kylian Mbappé",
-      "team": "France",
-      "nation": "FRA",
-      "g": 7,
-      "a": 2,
-      "pen": 1,
       "played": 5
     },
     {
@@ -664,6 +664,15 @@
       "a": 1,
       "pen": 2,
       "played": 5
+    },
+    {
+      "player": "Ousmane Dembélé",
+      "team": "France",
+      "nation": "FRA",
+      "g": 5,
+      "a": 2,
+      "pen": 0,
+      "played": 6
     },
     {
       "player": "Julián Quiñones",
@@ -702,15 +711,6 @@
       "played": 5
     },
     {
-      "player": "Ousmane Dembélé",
-      "team": "France",
-      "nation": "FRA",
-      "g": 4,
-      "a": 2,
-      "pen": 0,
-      "played": 5
-    },
-    {
       "player": "Ismaïla Sarr",
       "team": "Senegal",
       "nation": "SEN",
@@ -744,7 +744,7 @@
       "g": 3,
       "a": 0,
       "pen": 0,
-      "played": 5
+      "played": 6
     },
     {
       "player": "Kai Havertz",
@@ -2055,15 +2055,15 @@
     },
     {
       "date": "2026-07-09T20:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "QUARTER_FINALS",
       "group": "",
       "home": "France",
       "away": "Morocco",
-      "hg": null,
-      "ag": null,
-      "winner": null
+      "hg": 2,
+      "ag": 0,
+      "winner": "HOME_TEAM"
     },
     {
       "date": "2026-07-10T19:00:00Z",
@@ -2107,7 +2107,7 @@
       "matchday": null,
       "stage": "SEMI_FINALS",
       "group": "",
-      "home": "TBD",
+      "home": "France",
       "away": "TBD",
       "hg": null,
       "ag": null,
@@ -2251,12 +2251,12 @@
       "matches": [
         {
           "stage": "QUARTER_FINALS",
-          "status": "TIMED",
+          "status": "FINISHED",
           "home": "France",
           "away": "Morocco",
-          "hg": null,
-          "ag": null,
-          "winner": null,
+          "hg": 2,
+          "ag": 0,
+          "winner": "HOME_TEAM",
           "home_prob": 78,
           "away_prob": 22
         },
@@ -2302,7 +2302,7 @@
         {
           "stage": "SEMI_FINALS",
           "status": "TIMED",
-          "home": "TBD",
+          "home": "France",
           "away": "TBD",
           "hg": null,
           "ag": null,
