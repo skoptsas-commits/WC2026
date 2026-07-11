@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-10T18:08:36+00:00",
+  "updated_at": "2026-07-11T07:22:36+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -846,6 +846,15 @@
       "played": 6
     },
     {
+      "player": "Charles De Ketelaere",
+      "team": "Belgium",
+      "nation": "BEL",
+      "g": 3,
+      "a": 1,
+      "pen": 0,
+      "played": 6
+    },
+    {
       "player": "Cyle Larin",
       "team": "Canada",
       "nation": "CAN",
@@ -889,15 +898,6 @@
       "a": 0,
       "pen": 0,
       "played": 3
-    },
-    {
-      "player": "Yasin Ayari",
-      "team": "Sweden",
-      "nation": "SWE",
-      "g": 2,
-      "a": 0,
-      "pen": 0,
-      "played": 4
     }
   ],
   "matches": [
@@ -2067,15 +2067,15 @@
     },
     {
       "date": "2026-07-10T19:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "QUARTER_FINALS",
       "group": "",
       "home": "Spain",
       "away": "Belgium",
-      "hg": null,
-      "ag": null,
-      "winner": null
+      "hg": 2,
+      "ag": 1,
+      "winner": "HOME_TEAM"
     },
     {
       "date": "2026-07-11T21:00:00Z",
@@ -2108,7 +2108,7 @@
       "stage": "SEMI_FINALS",
       "group": "",
       "home": "France",
-      "away": "TBD",
+      "away": "Spain",
       "hg": null,
       "ag": null,
       "winner": null
@@ -2262,12 +2262,12 @@
         },
         {
           "stage": "QUARTER_FINALS",
-          "status": "TIMED",
+          "status": "FINISHED",
           "home": "Spain",
           "away": "Belgium",
-          "hg": null,
-          "ag": null,
-          "winner": null,
+          "hg": 2,
+          "ag": 1,
+          "winner": "HOME_TEAM",
           "home_prob": 69,
           "away_prob": 31
         },
@@ -2303,10 +2303,12 @@
           "stage": "SEMI_FINALS",
           "status": "TIMED",
           "home": "France",
-          "away": "TBD",
+          "away": "Spain",
           "hg": null,
           "ag": null,
-          "winner": null
+          "winner": null,
+          "home_prob": 73,
+          "away_prob": 27
         },
         {
           "stage": "SEMI_FINALS",
