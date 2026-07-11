@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-11T15:33:00+00:00",
+  "updated_at": "2026-07-11T20:31:19+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -654,7 +654,7 @@
       "g": 7,
       "a": 0,
       "pen": 0,
-      "played": 5
+      "played": 6
     },
     {
       "player": "Harry Kane",
@@ -663,7 +663,7 @@
       "g": 6,
       "a": 1,
       "pen": 2,
-      "played": 5
+      "played": 6
     },
     {
       "player": "Ousmane Dembélé",
@@ -699,7 +699,7 @@
       "g": 4,
       "a": 1,
       "pen": 0,
-      "played": 5
+      "played": 6
     },
     {
       "player": "Mikel Oyarzabal",
