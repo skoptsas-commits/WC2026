@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-11T20:31:19+00:00",
+  "updated_at": "2026-07-12T07:50:32+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -643,9 +643,9 @@
       "team": "Argentina",
       "nation": "ARG",
       "g": 8,
-      "a": 1,
+      "a": 2,
       "pen": 0,
-      "played": 5
+      "played": 6
     },
     {
       "player": "Erling Haaland",
@@ -663,6 +663,15 @@
       "g": 6,
       "a": 1,
       "pen": 2,
+      "played": 6
+    },
+    {
+      "player": "Jude Bellingham",
+      "team": "England",
+      "nation": "ENG",
+      "g": 6,
+      "a": 1,
+      "pen": 0,
       "played": 6
     },
     {
@@ -691,15 +700,6 @@
       "a": 1,
       "pen": 0,
       "played": 5
-    },
-    {
-      "player": "Jude Bellingham",
-      "team": "England",
-      "nation": "ENG",
-      "g": 4,
-      "a": 1,
-      "pen": 0,
-      "played": 6
     },
     {
       "player": "Mikel Oyarzabal",
@@ -870,7 +870,7 @@
       "g": 2,
       "a": 2,
       "pen": 1,
-      "played": 5
+      "played": 6
     },
     {
       "player": "Crysencio Summerville",
@@ -2079,27 +2079,27 @@
     },
     {
       "date": "2026-07-11T21:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "QUARTER_FINALS",
       "group": "",
       "home": "Norway",
       "away": "England",
-      "hg": null,
-      "ag": null,
-      "winner": null
+      "hg": 1,
+      "ag": 2,
+      "winner": "AWAY_TEAM"
     },
     {
       "date": "2026-07-12T01:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "QUARTER_FINALS",
       "group": "",
       "home": "Argentina",
       "away": "Switzerland",
-      "hg": null,
-      "ag": null,
-      "winner": null
+      "hg": 3,
+      "ag": 1,
+      "winner": "HOME_TEAM"
     },
     {
       "date": "2026-07-14T19:00:00Z",
@@ -2119,8 +2119,8 @@
       "matchday": null,
       "stage": "SEMI_FINALS",
       "group": "",
-      "home": "TBD",
-      "away": "TBD",
+      "home": "England",
+      "away": "Argentina",
       "hg": null,
       "ag": null,
       "winner": null
@@ -2273,23 +2273,23 @@
         },
         {
           "stage": "QUARTER_FINALS",
-          "status": "TIMED",
+          "status": "FINISHED",
           "home": "Norway",
           "away": "England",
-          "hg": null,
-          "ag": null,
-          "winner": null,
+          "hg": 1,
+          "ag": 2,
+          "winner": "AWAY_TEAM",
           "home_prob": 34,
           "away_prob": 66
         },
         {
           "stage": "QUARTER_FINALS",
-          "status": "TIMED",
+          "status": "FINISHED",
           "home": "Argentina",
           "away": "Switzerland",
-          "hg": null,
-          "ag": null,
-          "winner": null,
+          "hg": 3,
+          "ag": 1,
+          "winner": "HOME_TEAM",
           "home_prob": 73,
           "away_prob": 27
         }
@@ -2313,11 +2313,13 @@
         {
           "stage": "SEMI_FINALS",
           "status": "TIMED",
-          "home": "TBD",
-          "away": "TBD",
+          "home": "England",
+          "away": "Argentina",
           "hg": null,
           "ag": null,
-          "winner": null
+          "winner": null,
+          "home_prob": 27,
+          "away_prob": 73
         }
       ]
     },
