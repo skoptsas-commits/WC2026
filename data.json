@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-14T16:43:30+00:00",
+  "updated_at": "2026-07-14T21:32:43+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -636,7 +636,7 @@
       "g": 8,
       "a": 2,
       "pen": 1,
-      "played": 6
+      "played": 7
     },
     {
       "player": "Lionel Messi",
@@ -675,13 +675,22 @@
       "played": 6
     },
     {
+      "player": "Mikel Oyarzabal",
+      "team": "Spain",
+      "nation": "SPA",
+      "g": 5,
+      "a": 1,
+      "pen": 1,
+      "played": 7
+    },
+    {
       "player": "Ousmane Dembélé",
       "team": "France",
       "nation": "FRA",
       "g": 5,
       "a": 2,
       "pen": 0,
-      "played": 6
+      "played": 7
     },
     {
       "player": "Julián Quiñones",
@@ -700,15 +709,6 @@
       "a": 1,
       "pen": 0,
       "played": 5
-    },
-    {
-      "player": "Mikel Oyarzabal",
-      "team": "Spain",
-      "nation": "SPA",
-      "g": 4,
-      "a": 1,
-      "pen": 0,
-      "played": 6
     },
     {
       "player": "Ismaïla Sarr",
@@ -2103,15 +2103,15 @@
     },
     {
       "date": "2026-07-14T19:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "SEMI_FINALS",
       "group": "",
       "home": "France",
       "away": "Spain",
-      "hg": null,
-      "ag": null,
-      "winner": null
+      "hg": 0,
+      "ag": 2,
+      "winner": "AWAY_TEAM"
     },
     {
       "date": "2026-07-15T19:00:00Z",
@@ -2301,12 +2301,12 @@
       "matches": [
         {
           "stage": "SEMI_FINALS",
-          "status": "TIMED",
+          "status": "FINISHED",
           "home": "France",
           "away": "Spain",
-          "hg": null,
-          "ag": null,
-          "winner": null,
+          "hg": 0,
+          "ag": 2,
+          "winner": "AWAY_TEAM",
           "home_prob": 73,
           "away_prob": 27
         },
