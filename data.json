@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-14T21:32:43+00:00",
+  "updated_at": "2026-07-15T07:30:06+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -2131,7 +2131,7 @@
       "matchday": null,
       "stage": "THIRD_PLACE",
       "group": "",
-      "home": "TBD",
+      "home": "France",
       "away": "TBD",
       "hg": null,
       "ag": null,
@@ -2143,7 +2143,7 @@
       "matchday": null,
       "stage": "FINAL",
       "group": "",
-      "home": "TBD",
+      "home": "Spain",
       "away": "TBD",
       "hg": null,
       "ag": null,
@@ -2330,7 +2330,7 @@
         {
           "stage": "THIRD_PLACE",
           "status": "TIMED",
-          "home": "TBD",
+          "home": "France",
           "away": "TBD",
           "hg": null,
           "ag": null,
@@ -2345,7 +2345,7 @@
         {
           "stage": "FINAL",
           "status": "TIMED",
-          "home": "TBD",
+          "home": "Spain",
           "away": "TBD",
           "hg": null,
           "ag": null,
