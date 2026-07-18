@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-18T15:32:27+00:00",
+  "updated_at": "2026-07-18T20:32:14+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -636,7 +636,7 @@
       "g": 8,
       "a": 3,
       "pen": 1,
-      "played": 7
+      "played": 8
     },
     {
       "player": "Lionel Messi",
@@ -663,7 +663,7 @@
       "g": 6,
       "a": 1,
       "pen": 2,
-      "played": 7
+      "played": 8
     },
     {
       "player": "Jude Bellingham",
@@ -672,7 +672,7 @@
       "g": 6,
       "a": 1,
       "pen": 0,
-      "played": 7
+      "played": 8
     },
     {
       "player": "Mikel Oyarzabal",
@@ -690,7 +690,7 @@
       "g": 5,
       "a": 2,
       "pen": 0,
-      "played": 7
+      "played": 8
     },
     {
       "player": "Julián Quiñones",
