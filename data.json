@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-18T20:32:14+00:00",
+  "updated_at": "2026-07-19T07:51:28+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -633,8 +633,8 @@
       "player": "Kylian Mbappé",
       "team": "France",
       "nation": "FRA",
-      "g": 8,
-      "a": 3,
+      "g": 10,
+      "a": 4,
       "pen": 1,
       "played": 8
     },
@@ -657,6 +657,15 @@
       "played": 6
     },
     {
+      "player": "Jude Bellingham",
+      "team": "England",
+      "nation": "ENG",
+      "g": 7,
+      "a": 1,
+      "pen": 0,
+      "played": 8
+    },
+    {
       "player": "Harry Kane",
       "team": "England",
       "nation": "ENG",
@@ -666,11 +675,11 @@
       "played": 8
     },
     {
-      "player": "Jude Bellingham",
-      "team": "England",
-      "nation": "ENG",
+      "player": "Ousmane Dembélé",
+      "team": "France",
+      "nation": "FRA",
       "g": 6,
-      "a": 1,
+      "a": 2,
       "pen": 0,
       "played": 8
     },
@@ -682,15 +691,6 @@
       "a": 1,
       "pen": 1,
       "played": 7
-    },
-    {
-      "player": "Ousmane Dembélé",
-      "team": "France",
-      "nation": "FRA",
-      "g": 5,
-      "a": 2,
-      "pen": 0,
-      "played": 8
     },
     {
       "player": "Julián Quiñones",
@@ -772,6 +772,15 @@
       "a": 0,
       "pen": 0,
       "played": 3
+    },
+    {
+      "player": "Bradley Barcola",
+      "team": "France",
+      "nation": "FRA",
+      "g": 3,
+      "a": 1,
+      "pen": 0,
+      "played": 8
     },
     {
       "player": "Yoane Wissa",
@@ -864,6 +873,15 @@
       "played": 6
     },
     {
+      "player": "Bukayo Saka",
+      "team": "England",
+      "nation": "ENG",
+      "g": 3,
+      "a": 3,
+      "pen": 1,
+      "played": 8
+    },
+    {
       "player": "Cyle Larin",
       "team": "Canada",
       "nation": "CAN",
@@ -880,24 +898,6 @@
       "a": 2,
       "pen": 1,
       "played": 6
-    },
-    {
-      "player": "Crysencio Summerville",
-      "team": "Netherlands",
-      "nation": "NET",
-      "g": 2,
-      "a": 2,
-      "pen": 0,
-      "played": 4
-    },
-    {
-      "player": "Daichi Kamada",
-      "team": "Japan",
-      "nation": "JAP",
-      "g": 2,
-      "a": 0,
-      "pen": 0,
-      "played": 4
     }
   ],
   "matches": [
@@ -2127,15 +2127,15 @@
     },
     {
       "date": "2026-07-18T21:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "THIRD_PLACE",
       "group": "",
       "home": "France",
       "away": "England",
-      "hg": null,
-      "ag": null,
-      "winner": null
+      "hg": 4,
+      "ag": 6,
+      "winner": "AWAY_TEAM"
     },
     {
       "date": "2026-07-19T19:00:00Z",
@@ -2329,12 +2329,12 @@
       "matches": [
         {
           "stage": "THIRD_PLACE",
-          "status": "TIMED",
+          "status": "FINISHED",
           "home": "France",
           "away": "England",
-          "hg": null,
-          "ag": null,
-          "winner": null,
+          "hg": 4,
+          "ag": 6,
+          "winner": "AWAY_TEAM",
           "home_prob": 76,
           "away_prob": 24
         }
