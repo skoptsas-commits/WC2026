@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-19T15:32:50+00:00",
+  "updated_at": "2026-07-19T20:32:09+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -645,7 +645,7 @@
       "g": 8,
       "a": 4,
       "pen": 0,
-      "played": 7
+      "played": 8
     },
     {
       "player": "Erling Haaland",
@@ -690,7 +690,7 @@
       "g": 5,
       "a": 1,
       "pen": 1,
-      "played": 7
+      "played": 8
     },
     {
       "player": "Julián Quiñones",
@@ -861,7 +861,7 @@
       "g": 3,
       "a": 1,
       "pen": 1,
-      "played": 7
+      "played": 8
     },
     {
       "player": "Charles De Ketelaere",
@@ -2139,15 +2139,15 @@
     },
     {
       "date": "2026-07-19T19:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": null,
       "stage": "FINAL",
       "group": "",
       "home": "Spain",
       "away": "Argentina",
-      "hg": null,
-      "ag": null,
-      "winner": null
+      "hg": 0,
+      "ag": 0,
+      "winner": "DRAW"
     }
   ],
   "bracket": [
@@ -2346,12 +2346,12 @@
       "matches": [
         {
           "stage": "FINAL",
-          "status": "TIMED",
+          "status": "IN_PLAY",
           "home": "Spain",
           "away": "Argentina",
-          "hg": null,
-          "ag": null,
-          "winner": null,
+          "hg": 0,
+          "ag": 0,
+          "winner": "DRAW",
           "home_prob": 29,
           "away_prob": 71
         }
