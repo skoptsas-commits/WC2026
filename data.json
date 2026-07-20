@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-19T20:32:09+00:00",
+  "updated_at": "2026-07-20T10:33:22+00:00",
   "source": "football-data.org",
   "competition": "WC",
   "teams": [
@@ -2139,15 +2139,15 @@
     },
     {
       "date": "2026-07-19T19:00:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "FINAL",
       "group": "",
       "home": "Spain",
       "away": "Argentina",
-      "hg": 0,
+      "hg": 1,
       "ag": 0,
-      "winner": "DRAW"
+      "winner": "HOME_TEAM"
     }
   ],
   "bracket": [
@@ -2346,12 +2346,12 @@
       "matches": [
         {
           "stage": "FINAL",
-          "status": "IN_PLAY",
+          "status": "FINISHED",
           "home": "Spain",
           "away": "Argentina",
-          "hg": 0,
+          "hg": 1,
           "ag": 0,
-          "winner": "DRAW",
+          "winner": "HOME_TEAM",
           "home_prob": 29,
           "away_prob": 71
         }
